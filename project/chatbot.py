@@ -1,4 +1,4 @@
-from __future__ import print_function, unicode literals
+from __future__ import print_function, unicode_literals
 import nltk
 import numpy as np
 import random
@@ -59,28 +59,28 @@ def response(user_response):
         robo_response = robo_response + sent_tokens[idx]
         return robo_response
 
-flag = True
-
-print("Bot: My name is dipshit. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
-
-while(flag==True):
-    user_response = input()
-    user_response=user_response.lower()
-    if(user_response!='bye'):
-        if (user_response=='thanks' or user_response=='thank you'):
-            flag = False
+def converse():
+    flag = True
+    while(flag==True):
+        user_response = input()
+        user_response=user_response.lower()
+        if(user_response=='bye'):
+            return
+        elif (user_response=='thanks' or user_response=='thank you'):
             print("Bot: You're welcome")
+            return
+        elif(greeting(user_response) != None):
+            print("Bot: " + greeting(user_response))
+            break
         else:
-            if(greeting(user_response) != None):
-                print("Bot: " + greeting(user_response))
-            else:
-                sent_tokens.append(user_response)
+            sent_tokens.append(user_response)
+            word_tokens = word_tokens + nltk.word_tokenize(user_response)
+            final_words = list(set(word_tokens))
+            print("Bot: ", end="")
+            print(response(user_response))
+            sent_tokens.remove(user_response)
 
-                word_tokens = word_tokens + nltk.word_tokenize(user_response)
-                final_words = list(set(word_tokens))
-                print("Bot: ", end="")
-                print(response(user_response))
-                sent_tokens.remove(user_response)
-    else:
-        flag=False
-        print("Bot: Cya bitch")
+if __name__ == '__main__':
+    print("Bot: My name is dipshit. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
+    converse()
+    print("Bot: Cya bitch")
