@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 from textblob import TextBlob
-from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF
+from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
 
 # DATA LOADING
 
@@ -83,8 +83,6 @@ def find_noun(sent):
             if p == 'NN':  # This is a noun
                 noun = w
                 break
-    if noun:
-        logger.info("Found noun: %s", noun)
 
     return noun
 
@@ -111,6 +109,75 @@ def preprocess_text(sentence):
 
     return ' '.join(cleaned)
 
+# start:example-construct-response.py
+def construct_response(pronoun, noun, verb):
+    """No special cases matched, so we're going to try to construct a full sentence that uses as much
+    of the user's input as possible"""
+    resp = []
+
+    if pronoun:
+        resp.append(pronoun)
+
+    # We always respond in the present tense, and the pronoun will always either be a passthrough
+    # from the user, or 'you' or 'I', in which case we might need to change the tense for some
+    # irregular verbs.
+    if verb:
+        verb_word = verb[0]
+        if verb_word in ('be', 'am', 'is', "'m"):  # This would be an excellent place to use lemmas!
+            if pronoun.lower() == 'you':
+                # The bot will always tell the person they aren't whatever they said they were
+                resp.append("aren't really")
+            else:
+                resp.append(verb_word)
+    if noun:
+        pronoun = "an" if starts_with_vowel(noun) else "a"
+        resp.append(pronoun + " " + noun)
+
+    resp.append(random.choice(("tho", "bro", "lol", "bruh", "smh", "")))
+
+    return " ".join(resp)
+# end
+
+
+# start:example-check-for-self.py
+def check_for_comment_about_bot(pronoun, noun, adjective):
+    """Check if the user's input was about the bot itself, in which case try to fashion a response
+    that feels right based on their input. Returns the new best sentence, or None."""
+    resp = None
+    if pronoun == 'I' and (noun or adjective):
+        if noun:
+            if random.choice((True, False)):
+                resp = random.choice(SELF_VERBS_WITH_NOUN_CAPS_PLURAL).format(**{'noun': noun.pluralize().capitalize()})
+            else:
+                resp = random.choice(SELF_VERBS_WITH_NOUN_LOWER).format(**{'noun': noun})
+        else:
+            resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective': adjective})
+    return resp
+
+def find_candidate_parts_of_speech(parsed):
+    """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
+    Returns a tuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
+    pronoun = None
+    noun = None
+    adjective = None
+    verb = None
+    for sent in parsed.sentences:
+        pronoun = find_pronoun(sent)
+        noun = find_noun(sent)
+        adjective = find_adjective(sent)
+        verb = find_verb(sent)
+    return pronoun, noun, adjective, verb
+
+def filter_response(resp):
+    """Don't allow any words to match our filter list"""
+    tokenized = resp.split(' ')
+    for word in tokenized:
+        if '@' in word or '#' in word or '!' in word:
+            raise UnacceptableUtteranceException()
+        for s in FILTER_WORDS:
+            if word.lower().startswith(s):
+                raise UnacceptableUtteranceException()
+
 lemmer = nltk.stem.WordNetLemmatizer()
 
 def LemTokens(tokens):
@@ -123,9 +190,45 @@ def LemNormalize(text):
 
 def greeting(sentence):
     # TODO: change split to .words
-    for word in sentence.split():
+    for word in sentence.words:
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
+
+def respond(sentence):
+    """Parse the user's inbound sentence and find candidate terms that make up a best-fit response"""
+    cleaned = preprocess_text(sentence)
+    parsed = TextBlob(cleaned)
+
+    # Loop through all the sentences, if more than one. This will help extract the most relevant
+    # response text even across multiple sentences (for example if there was no obvious direct noun
+    # in one sentence
+    pronoun, noun, adjective, verb = find_candidate_parts_of_speech(parsed)
+
+    # If we said something about the bot and used some kind of direct noun, construct the
+    # sentence around that, discarding the other candidates
+    resp = check_for_comment_about_bot(pronoun, noun, adjective)
+
+    # If we just greeted the bot, we'll use a return greeting
+    if not resp:
+        resp = respond(parsed)
+
+    if not resp:
+        # If we didn't override the final sentence, try to construct a new one:
+        if not pronoun:
+            resp = random.choice(NONE_RESPONSES)
+        elif pronoun == 'I' and not verb:
+            resp = random.choice(COMMENTS_ABOUT_SELF)
+        else:
+            resp = construct_response(pronoun, noun, verb)
+
+    # If we got through all that with nothing, use a random response
+    if not resp:
+        resp = random.choice(NONE_RESPONSES)
+
+    # Check that we're not going to say anything obviously offensive
+    filter_response(resp)
+
+    return resp
 
 def response(user_response):
     robo_response=''
@@ -168,7 +271,12 @@ def converse():
             print(response(user_response))
             sent_tokens.remove(user_response)
 
+def converse2(sentence):
+    resp = respond(sentence)
+    return resp
+
 if __name__ == '__main__':
-    print("Bot: My name is dipshit. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
-    converse()
-    print("Bot: Cya bitch")
+    # print("Bot: My name is dipshit. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
+    # converse()
+    # print("Bot: Cya bitch")
+    print(converse2("How's it going?"))
