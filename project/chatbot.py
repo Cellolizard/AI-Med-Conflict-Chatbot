@@ -145,29 +145,16 @@ def response(user_response):
         robo_response = robo_response + sent_tokens[idx]
         return robo_response
 
-<<<<<<< HEAD
+#DRIVER
 def converse():
-    flag = True
-    while(flag==True):
+    global word_tokens
+    global sent_tokens
+    while(True):
         user_response = input()
         user_response=user_response.lower()
         if(user_response=='bye'):
             return
         elif (user_response=='thanks' or user_response=='thank you'):
-=======
-# DRIVER
-
-flag = True
-
-print("Bot: My name is dipshit. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
-
-while(flag==True):
-    user_response = input()
-    user_response=user_response.lower()
-    if(user_response!='bye'):
-        if (user_response=='thanks' or user_response=='thank you'):
-            flag = False
->>>>>>> 8d3936836ed73dbee04fe6942d17fb45310bfafd
             print("Bot: You're welcome")
             return
         elif(greeting(user_response) != None):
