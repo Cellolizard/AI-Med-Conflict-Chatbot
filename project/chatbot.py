@@ -5,6 +5,11 @@ import random
 import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import os
+from textblob import TextBlob
+from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF
+
+os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
 
 f = open('chatbot.txt', 'r', errors = 'ignore')
 
@@ -30,10 +35,6 @@ remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 
 def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
-
-GREETING_INPUTS = ("hello", "hi", "sup", "what's up?", "hey", "heyy", "greetings slut",)
-
-GREETING_RESPONSES = ["hi", "hey", "*nods*", "heya", "hello", "I am so glad I finally have a friend to talk to."]
 
 def greeting(sentence):
     for word in sentence.split():
