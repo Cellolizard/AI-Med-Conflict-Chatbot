@@ -1,3 +1,4 @@
+from __future__ import print_function, unicode literals
 import nltk
 import numpy as np
 import random
