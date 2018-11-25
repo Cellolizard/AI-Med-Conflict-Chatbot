@@ -122,7 +122,8 @@ def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
 def greeting(sentence):
-    for word in sentence.word:
+    # TODO: change split to .words
+    for word in sentence.split():
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
 
