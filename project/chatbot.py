@@ -242,7 +242,7 @@ def response(user_response):
     req_tfidf = flat[-2]
 
     if(req_tfidf==0):
-        robo_response = robo_response + "What the fuck are you saying?"
+        robo_response = robo_response + "What are you saying?"
         return robo_response
     else:
         robo_response = robo_response + sent_tokens[idx]
@@ -276,7 +276,7 @@ def converse2(sentence):
     return resp
 
 if __name__ == '__main__':
-    # print("Bot: My name is dipshit. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
+    # print("Bot: My name is Bot. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
     # converse()
-    # print("Bot: Cya bitch")
+    # print("Bot: Cya fam")
     print(converse2("How's it going?"))
