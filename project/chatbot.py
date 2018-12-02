@@ -276,7 +276,7 @@ def converse2(sentence):
     return resp
 
 if __name__ == '__main__':
-    # print("Bot: My name is Bot. I will answer questions about chatbots as stupid as me! If you are fed up with me, tell me Bye")
+    # print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
     # converse()
     # print("Bot: Cya fam")
     print(converse2("How's it going?"))
