@@ -209,8 +209,8 @@ def respond(sentence):
     resp = check_for_comment_about_bot(pronoun, noun, adjective)
 
     # If we just greeted the bot, we'll use a return greeting
-    if not resp:
-        resp = respond(parsed)
+    # if not resp:
+    #     resp = respond(parsed)
 
     if not resp:
         # If we didn't override the final sentence, try to construct a new one:
@@ -276,7 +276,7 @@ def converse2(sentence):
     return resp
 
 if __name__ == '__main__':
-    # print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
-    # converse()
-    # print("Bot: Cya fam")
-    print(converse2("How's it going?"))
+    print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
+    while(True):
+        resp = input('> ')
+        print(converse2(resp))

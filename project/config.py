@@ -45,7 +45,8 @@ FILTER_WORDS = set([
     "crip",
     "raghead",
     "negro",
-    "hooker"])
+    "hooker",
+    "son of a motherless goat"])
 
 GREETING_INPUTS = ("hello", "hi", "sup", "what's up?", "hey", "heyy", "greetings",)
 
