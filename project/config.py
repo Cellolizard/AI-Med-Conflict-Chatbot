@@ -47,7 +47,7 @@ FILTER_WORDS = set([
     "negro",
     "hooker"])
 
-GREETING_INPUTS = ("hello", "hi", "sup", "what's up?", "hey", "heyy", "greetings slut",)
+GREETING_INPUTS = ("hello", "hi", "sup", "what's up?", "hey", "heyy", "greetings",)
 
 GREETING_RESPONSES = ["hi", "hey", "*nods*", "heya", "hello", "I am so glad I finally have a friend to talk to."]
 
