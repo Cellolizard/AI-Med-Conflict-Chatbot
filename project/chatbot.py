@@ -9,6 +9,7 @@ import nltk
 import numpy as np
 import random
 import string
+import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
@@ -17,7 +18,7 @@ from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPO
 
 # DATA LOADING
 
-os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
+os.environ['NLTK_DATA'] = '../nltk_data'
 
 f = open('chatbot.txt', 'r', errors = 'ignore')
 
@@ -279,4 +280,8 @@ if __name__ == '__main__':
     # print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
     # converse()
     # print("Bot: Cya fam")
-    print(converse2("How's it going?"))
+    if (len(sys.argv) > 0):
+        sentence = sys.argv[1]
+    else:
+        sentence = "How's it going?"
+    print(converse2(sentence))
