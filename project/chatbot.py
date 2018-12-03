@@ -151,7 +151,7 @@ def check_for_comment_about_drugs(pronoun, noun, adjective):
     """Check if the user's input was about drugs, in which case try to fashion a response
     that feels right based on their input. Returns the new best sentence, or None."""
     resp = None
-    if noun.lower() in ["drugs", "medicine", "medication"]:
+    if noun and noun.lower() in ["drugs", "medicine", "medication"]:
         resp = "You're talking about medicine."
     return resp
 
