@@ -16,7 +16,7 @@ import os
 import io
 from textblob import TextBlob
 from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
-from api import
+#from api import
 
 # DATA LOADING
 
@@ -29,7 +29,7 @@ raw = f.read()
 raw = raw.lower()
 
 nltk.download('punkt')
-nltk.download('wordnet')
+nltk.download('wordnet') 
 
 sent_tokens = nltk.sent_tokenize(raw)
 word_tokens = nltk.word_tokenize(raw)
@@ -221,9 +221,13 @@ def respond(sentence):
 
 	# resp = check_for_comment_about_bot(pronoun, noun, adjective)
 
-	resp = check_for_comment_about_drugs(pronoun, noun, adjective)
-	resp = check_for_mention_of_drugs(parsed)
-
+    resp = None
+    if not resp:
+        resp = check_for_comment_about_drugs(pronoun, noun, adjective)
+	if not resp:
+        resp = check_for_mention_of_drugs(parsed)
+    if not resp:
+        resp = check_for_greeting(parsed)
 	# If we just greeted the bot, we'll use a return greeting
 	# if not resp:
 	#     resp = respond(parsed)
