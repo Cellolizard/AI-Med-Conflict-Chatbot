@@ -16,7 +16,7 @@ import os
 import io
 from textblob import TextBlob
 from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
-from api import
+# from api import *
 
 # DATA LOADING
 
@@ -156,6 +156,8 @@ def check_for_mention_of_drugs(input):
 	if "medicine" in input.lower() or "drugs" in input.lower() or "medication" in input.lower():
 		if input.find("are") >= 0:
 			drugs = input[input.index("are"):].split()
+			# .map(lambda x: str(x)).filter(lambda x: x.isalpha())
+			print(drugs)
 	return resp
 
 def check_for_comment_about_drugs(pronoun, noun, adjective):
