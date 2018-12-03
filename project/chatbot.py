@@ -13,6 +13,7 @@ import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
+import io
 from textblob import TextBlob
 from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
 
@@ -20,7 +21,7 @@ from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPO
 
 os.environ['NLTK_DATA'] = '../nltk_data'
 
-f = open('chatbot.txt', 'r', errors = 'ignore')
+f = io.open('chatbot.txt', 'r', errors='ignore')
 
 raw = f.read()
 
@@ -208,7 +209,7 @@ def respond(sentence):
     # If we said something about the bot and used some kind of direct noun, construct the
     # sentence around that, discarding the other candidates
     resp = check_for_comment_about_bot(pronoun, noun, adjective)
-
+	
     # If we just greeted the bot, we'll use a return greeting
     # if not resp:
     #     resp = respond(parsed)
@@ -279,5 +280,5 @@ def converse2(sentence):
 if __name__ == '__main__':
     print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
     while(True):
-        resp = input('> ')
+        resp = raw_input('> ')
         print(converse2(resp))
