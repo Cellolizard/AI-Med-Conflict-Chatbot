@@ -9,6 +9,7 @@ def rxNormId(name):
     if resp.status_code != 200:
         raise ApiError('GET {0} returned {1}'.format(resp.url, resp.status_code))
     xml = ET.fromstring(resp.content).findall('idGroup')[0].find('rxnormId')
-    if xml is None:
-        raise ApiError('No drug named {0}'.format(name))
+	# be pythonic and return none...
+    # if xml is None:
+        # raise ApiError('No drug named {0}'.format(name))
     return xml.text
