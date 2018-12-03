@@ -307,7 +307,7 @@ def converse2(sentence):
     return resp
 
 if __name__ == '__main__':
-    print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
+    print("Bot: Hello, my name is Dr. Web MD. Please feel free to ask me any questions you may have regarding the medicines you're taking.")
     while(True):
         resp = input('> ')
         print(converse2(resp))
