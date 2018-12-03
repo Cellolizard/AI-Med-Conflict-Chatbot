@@ -48,9 +48,40 @@ FILTER_WORDS = set([
     "hooker",
     "son of a motherless goat"])
 
-GREETING_INPUTS = ("hello", "hi", "sup", "what's up?", "hey", "heyy", "greetings",)
+GREETING_INPUTS = ("hello",
+    "hi",
+    "sup",
+    "what's up",
+    "hey",
+    "heyy",
+    "greetings",
+    "how are you",
+    "how're you",
+    "howre you",
+    "how is everything",
+    "how are you doing",
+    "how're you doing",
+    "howre you doing",
+    "wassup",
+    "good to see you",
+    "whats good",
+    "what's good",
+    "whats crackalackin",
+    "long time no see",
+    "howdy",
+    "shalom",
+    "hi-ya",
+    "hiya",
+    "how goes it",
+    "hows it going",
+    "how's it going",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "good day",)
+    # may need to edit out good day/morning/evening/afternoon if determined it conflicts with somebody's conversation on a particular morning/day/etc
 
-GREETING_RESPONSES = ["hi", "hey", "*nods*", "heya", "hello", "I am so glad I finally have a friend to talk to."]
+GREETING_RESPONSES = ["hi there!", "hello", "Greetings!", "How are you doing?", "How's it going?", "Good day, how are you?"]
 
 NONE_RESPONSES = [
     "I am unsure of what you mean.",
@@ -61,7 +92,7 @@ COMMENTS_ABOUT_SELF = [
     ]
 
 SELF_VERBS_WITH_NOUN_CAPS_PLURAL = [
-    "My {noun} is the best pet ever.",
+    "My {noun} is the best you've ever seen.",
 ]
 
 SELF_VERBS_WITH_NOUN_LOWER = [
