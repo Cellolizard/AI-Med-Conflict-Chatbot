@@ -142,6 +142,13 @@ def check_for_comment_about_bot(pronoun, noun, adjective):
             resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective': adjective})
     return resp
 
+def check_for_greeting(input):
+    resp = None
+    for word in GREETING_INPUTS:
+        if word in input.lower():
+            resp = random.choice(GREETING_RESPONSES).capitalize()
+    return resp
+
 def check_for_mention_of_drugs(input):
     resp = None
     if "medicine" in input.lower():
@@ -209,11 +216,15 @@ def respond(sentence):
     # If we said something about the bot and used some kind of direct noun, construct the
     # sentence around that, discarding the other candidates
 
+    resp = None
+
     # resp = check_for_comment_about_bot(pronoun, noun, adjective)
-
-    resp = check_for_comment_about_drugs(pronoun, noun, adjective)
-    resp = check_for_mention_of_drugs(parsed)
-
+    if not resp:
+        resp = check_for_comment_about_drugs(pronoun, noun, adjective)
+    if not resp:
+        resp = check_for_mention_of_drugs(parsed)
+    if not resp:
+        resp = check_for_greeting(parsed)
     # If we just greeted the bot, we'll use a return greeting
     # if not resp:
     #     resp = respond(parsed)
@@ -284,5 +295,5 @@ def converse2(sentence):
 if __name__ == '__main__':
     print("Bot: My name is Bot. I will answer questions about chatbots! If you are fed up with me, tell me Bye")
     while(True):
-        resp = raw_input('> ')
+        resp = input('> ')
         print(converse2(resp))
