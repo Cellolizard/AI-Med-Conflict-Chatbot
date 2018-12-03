@@ -16,6 +16,7 @@ import os
 import io
 from textblob import TextBlob
 from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
+from api import
 
 # DATA LOADING
 
@@ -143,6 +144,7 @@ def check_for_comment_about_bot(pronoun, noun, adjective):
     return resp
 
 def check_for_greeting(input):
+    # git trigger
     resp = None
     for word in GREETING_INPUTS:
         if word in input.lower():
