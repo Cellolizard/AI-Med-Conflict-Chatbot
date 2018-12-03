@@ -16,7 +16,8 @@ import os
 import io
 from textblob import TextBlob
 from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
-#from api import
+from interaction import findDrugInteractions
+from rxnorm import rxNormId
 
 # DATA LOADING
 
@@ -29,7 +30,7 @@ raw = f.read()
 raw = raw.lower()
 
 nltk.download('punkt')
-nltk.download('wordnet') 
+nltk.download('wordnet')
 
 sent_tokens = nltk.sent_tokenize(raw)
 word_tokens = nltk.word_tokenize(raw)
@@ -163,7 +164,8 @@ def check_for_comment_about_drugs(pronoun, noun, adjective):
     that feels right based on their input. Returns the new best sentence, or None."""
     resp = None
     if noun and noun.lower() in ["drugs", "medicine", "medication"]:
-        resp = "You're talking about medicine."
+        names = ('tylenol', 'ibuprofen', 'viagra')
+        resp = str(findDrugInteractions(map(rxNormId, names)))
     return resp
 
 def find_candidate_parts_of_speech(parsed):
