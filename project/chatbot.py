@@ -38,6 +38,11 @@ word_tokens = nltk.word_tokenize(raw)
 sent_tokens[:2]
 word_tokens[:5]
 
+# Dictionary of drug names used
+
+# dictionary of form RxNormId : {CommonName : OfficialName}
+client_drug_names = {}
+
 # API CALLS
 
 # CLASSES
@@ -47,6 +52,13 @@ class NoNoWordsException(Exception):
     pass
 1
 # FUNCTIONS
+
+def add_to_client_drug_names(rxNormId, dictPair):
+    client_drug_names[rxNormId] = dictPair
+    return True
+
+def get_from_client_drug_names(rxNormId):
+    return client_drug_names[rxNormId]
 
 def starts_with_vowel(word):
     """Check for pronoun compability -- 'a' vs. 'an'"""
