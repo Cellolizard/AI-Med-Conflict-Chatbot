@@ -40,8 +40,8 @@ word_tokens[:5]
 
 # Dictionary of drug names used
 
-# dictionary of form RxNormId : {CommonName : OfficialName}
-client_drug_names = {}
+# dictionary of form RxNormId : {UserName : OfficialName}
+user_drug_names = {}
 
 # API CALLS
 
@@ -54,11 +54,11 @@ class NoNoWordsException(Exception):
 # FUNCTIONS
 
 def add_to_client_drug_names(rxNormId, dictPair):
-    client_drug_names[rxNormId] = dictPair
+    user_drug_names[rxNormId] = dictPair
     return True
 
 def get_from_client_drug_names(rxNormId):
-    return client_drug_names[rxNormId]
+    return user_drug_names[rxNormId]
 
 def starts_with_vowel(word):
     """Check for pronoun compability -- 'a' vs. 'an'"""
