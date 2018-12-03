@@ -156,6 +156,14 @@ def check_for_comment_about_bot(pronoun, noun, adjective):
             resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective': adjective})
     return resp
 
+def check_for_comment_about_drugs(pronoun, noun, adjective):
+    """Check if the user's input was about drugs, in which case try to fashion a response
+    that feels right based on their input. Returns the new best sentence, or None."""
+    resp = None
+    if noun.lower() in ["drugs", "medicine", "medication"]:
+        resp = "You're talking about medicine."
+    return resp
+
 def find_candidate_parts_of_speech(parsed):
     """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
     Returns a tuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
@@ -208,8 +216,11 @@ def respond(sentence):
 
     # If we said something about the bot and used some kind of direct noun, construct the
     # sentence around that, discarding the other candidates
-    resp = check_for_comment_about_bot(pronoun, noun, adjective)
-	
+
+    # resp = check_for_comment_about_bot(pronoun, noun, adjective)
+
+    resp = check_for_comment_about_drugs(pronoun, noun, adjective)
+
     # If we just greeted the bot, we'll use a return greeting
     # if not resp:
     #     resp = respond(parsed)
