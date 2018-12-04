@@ -165,27 +165,28 @@ def check_for_greeting(input):
     return resp
 
 def check_for_mention_of_drugs(input):
-    resp = None
-    resp = []
-    drugs = []
-    # The drugs I'm currently taking are . . .
-    if input.find("are") >= 0:
-        drugs = [str(d).strip() for d in input[input.index("are"):].split()]
-    # Here's a list of the drugs I'm taking: . . .
-    elif input.find("taking") >= 0:
-        drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
-    # Please check these drugs for me . . .
-    elif input.find("check") >= 0:
-        drugs = [str(d).strip() for d in input[input.index("check"):].split()]
-    # [Some complicated way to give list of drugs] . . . Thanks!/Thank you!
-    elif input.find("thank") >= 0:
-        drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
-    drugInteractionsDict = findDrugInteractions(map(rxNormId, drugs))
-
-    resp = str(drugInteractionsDict)
-    if not resp:
-        resp = "I couldn't find anything. Would you like me to ask Siri?"
-    return resp
+	resp = None
+	resp = []
+	drugs = []
+	if "medicine" in input.lower() or "drug" in input.lower() or "medication" in input.lower():
+		# The drugs I'm currently taking are . . .
+		if input.find("are") >= 0:
+			drugs = [str(d).strip() for d in input[input.index("are"):].split()]
+		# Here's a list of the drugs I'm taking: . . .
+		elif input.find("taking") >= 0:
+			drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
+		# Please check these drugs for me . . .
+		elif input.find("check") >= 0:
+			drugs = [str(d).strip() for d in input[input.index("check"):].split()]
+		# [Some complicated way to give list of drugs] . . . Thanks!/Thank you!
+		elif input.find("thank") >= 0:
+			drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
+		if(len(drugs) > 0):
+			drugInteractionsDict = str(findDrugInteractions(map(rxNormId, drugs)))
+			resp = str(drugInteractionsDict)
+			if not resp:
+				resp = "I couldn't find anything. Would you like me to ask Siri?"
+	return resp
 
 def check_for_comment_about_drugs(pronoun, noun, adjective):
     """Check if the user's input was about drugs, in which case try to fashion a response
