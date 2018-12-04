@@ -82,6 +82,19 @@ GREETING_INPUTS = ("hello",
     "good day",)
     # may need to edit out good day/morning/evening/afternoon if determined it conflicts with somebody's conversation on a particular morning/day/etc
 
+GOODBYE_INPUTS = (
+    "bye",
+    "goodbye",
+    "cya",
+    "see you later",
+    "good bye",
+    "take it easy",
+    "take care",
+    "peace out",
+)
+
+GOODBYE_RESPONSES = ["Goodbye!", "Bye!", "Thanks for chatting!", "Take it easy!", "Take care!", "Bye bye!"]
+
 GREETING_RESPONSES = ["hi there!", "hello", "Greetings!", "How are you doing?", "How's it going?", "Good day, how are you?"]
 
 NONE_RESPONSES = [

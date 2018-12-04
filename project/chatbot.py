@@ -15,7 +15,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import io
 from textblob import TextBlob
-from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL
+from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
 from interaction import findDrugInteractions
 from rxnorm import rxNormId
 
@@ -145,11 +145,17 @@ def check_for_comment_about_bot(pronoun, noun, adjective):
     return resp
 
 def check_for_greeting(input):
-    # git trigger
     resp = None
     for word in GREETING_INPUTS:
         if word in input.lower():
             resp = random.choice(GREETING_RESPONSES).capitalize()
+    return resp
+
+def check_for_goodbye(input):
+    resp = None
+    for word in GOODBYE_INPUTS:
+        if word in input.lower():
+            resp = random.choice(GOODBYE_RESPONSES).capitalize()
     return resp
 
 def check_for_mention_of_drugs(input):
@@ -244,6 +250,8 @@ def respond(sentence):
         resp = check_for_comment_about_drugs(pronoun, noun, adjective)
     if not resp:
         resp = check_for_greeting(parsed)
+    if not resp:
+        resp = check_for_goodbye(parsed)
     # If we just greeted the bot, we'll use a return greeting
     # if not resp:
     #     resp = respond(parsed)
