@@ -23,20 +23,8 @@ from rxnorm import rxNormId
 
 os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
 
-f = io.open('chatbot.txt', 'r', errors='ignore')
-
-raw = f.read()
-
-raw = raw.lower()
-
 nltk.download('punkt')
 nltk.download('wordnet')
-
-sent_tokens = nltk.sent_tokenize(raw)
-word_tokens = nltk.word_tokenize(raw)
-
-sent_tokens[:2]
-word_tokens[:5]
 
 # Dictionary of drug names used
 
@@ -278,48 +266,9 @@ def respond(sentence):
 
     return resp
 
-def response(user_response):
-    robo_response=''
-
-    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
-    tfidf = TfidfVec.fit_transform(sent_tokens)
-    vals = cosine_similarity(tfidf[-1], tfidf)
-    idx = vals.argsort()[0][-2]
-    flat = vals.flatten()
-    flat.sort()
-    req_tfidf = flat[-2]
-
-    if(req_tfidf==0):
-        robo_response = robo_response + "What are you saying?"
-        return robo_response
-    else:
-        robo_response = robo_response + sent_tokens[idx]
-        return robo_response
-
 #DRIVER
-def converse():
-    global word_tokens
-    global sent_tokens
-    while(True):
-        user_response = input()
-        user_response=user_response.lower()
-        if(user_response=='bye'):
-            return
-        elif (user_response=='thanks' or user_response=='thank you'):
-            print("Bot: You're welcome")
-            return
-        elif(greeting(user_response) != None):
-            print("Bot: " + greeting(user_response))
-            break
-        else:
-            sent_tokens.append(user_response)
-            word_tokens = word_tokens + nltk.word_tokenize(user_response)
-            final_words = list(set(word_tokens))
-            print("Bot: ", end="")
-            print(response(user_response))
-            sent_tokens.remove(user_response)
 
-def converse2(sentence):
+def converse(sentence):
     resp = respond(sentence)
     return resp
 
@@ -327,4 +276,4 @@ if __name__ == '__main__':
     print("Bot: Hello, my name is Dr. Web MD. Please feel free to ask me any questions you may have regarding the medicines you're taking.")
     while(True):
         resp = input('> ')
-        print(converse2(resp))
+        print(converse(resp))
