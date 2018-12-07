@@ -159,8 +159,7 @@ def check_for_goodbye(input):
     return resp
 
 def check_for_mention_of_drugs(input):
-    resp = None
-    resp = []
+    resp = ""
     drugs = []
     # The drugs I'm currently taking are . . .
     if input.find("are") >= 0:
@@ -175,12 +174,9 @@ def check_for_mention_of_drugs(input):
     elif input.find("thank") >= 0:
         drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
     if(len(drugs) > 0):
-        rxNormIds = list(map(rxNormId, drugs))
-        print(rxNormIds)
-        drugInteractionsDict = str(findDrugInteractions(map(rxNormId, drugs)))
-        # for rx in rxNormIds:
-        #     resp += str(drugInteractionsDict[rx]) + " "
-        resp = str(drugInteractionsDict)
+        drugInteractionsDict = findDrugInteractions(map(rxNormId, drugs))
+        for i in drugInteractionsDict.values():
+            resp += i + " "
         if not resp:
             resp = "I couldn't find anything. Would you like me to ask Siri?"
     return resp
