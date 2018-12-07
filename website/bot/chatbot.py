@@ -175,7 +175,7 @@ def check_for_mention_of_drugs(input):
 	elif input.find("thank") >= 0:
 		drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
 	if(len(drugs) > 0):
-		drugInteractionsDict = str(findDrugInteractions(map(rxNormId, drugs)))
+		drugInteractionsDict = str(findDrugInteractions(list(map(rxNormId, drugs))))
 		resp = str(drugInteractionsDict)
 		if not resp:
 			resp = "I couldn't find anything. Would you like me to ask Siri?"
