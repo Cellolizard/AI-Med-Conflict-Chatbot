@@ -1,4 +1,4 @@
-<form action = "/bot/" method="post">
+<form action = "/bot/converse" method="post">
   <div>
     <strong>Greeting:</strong>
     <br>
@@ -8,20 +8,3 @@
     <span>{{ bot_response }}</span>
   </div>
 </form>
-
-
-<!-- {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/bot/{{ question.id }}/">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No bot are available.</p>
-{% endif %} -->
-
-<!-- <form action="/your-name/" method="post">
-    <label for="converse">Your name: </label>
-    <input id="converse" type="text" name="converse" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form> -->
