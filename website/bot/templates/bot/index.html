@@ -1,12 +1,13 @@
-<div>
-  <strong>Greeting:</strong>
-  <br>
-  <form action = "" method="post">
-    Type stuff here:
-    <input type ="text" stuff = "lulz"><br>
-  </form>
-  <span>{{ bot_response }}</span>
-</div>
+<form action = "/bot/" method="post">
+  <div>
+    <strong>Greeting:</strong>
+    <br>
+    <label for="converse">Your name: </label>
+    <input id="converse" type="text" name="converse" value="{{ current_name }}">
+    <input type="submit" value="OK">
+    <span>{{ bot_response }}</span>
+  </div>
+</form>
 
 
 <!-- {% if latest_question_list %}
@@ -20,7 +21,7 @@
 {% endif %} -->
 
 <!-- <form action="/your-name/" method="post">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+    <label for="converse">Your name: </label>
+    <input id="converse" type="text" name="converse" value="{{ current_name }}">
     <input type="submit" value="OK">
 </form> -->
