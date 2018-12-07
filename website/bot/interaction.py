@@ -12,16 +12,21 @@ URL = 'https://rxnav.nlm.nih.gov/REST/interaction/list.json'
 #   findDrugInteractions(names)
 
 def findDrugInteractions(rxcuis):
+<<<<<<< HEAD
+    rxcuis = list(filter(None, rxcuis))
+=======
     rxcuis = filter(None, rxcuis)
+>>>>>>> ab4ef7a3a8dd624f753d3d59260920153e6e6abb
     resp = requests.get(URL + '?rxcuis=' + '+'.join(rxcuis))
     interactions = {}
     if resp.status_code != 200:
         raise ApiError('GET {0} returned {1}'.format(resp.url, resp.status_code))
-    for interaction_type in resp.json()['fullInteractionTypeGroup'][0]['fullInteractionType']:
-        for interaction_pair in interaction_type['interactionPair']:
-            d1 = interaction_type['minConcept'][0]['rxcui']
-            d2 = interaction_type['minConcept'][1]['rxcui']
-            interactions['{0},{1}'.format(d1, d2)] = interaction_pair['description']
+    if 'fullInteractionTypeGroup' in resp.json():
+        for interaction_type in resp.json()['fullInteractionTypeGroup'][0]['fullInteractionType']:
+            for interaction_pair in interaction_type['interactionPair']:
+                d1 = interaction_type['minConcept'][0]['rxcui']
+                d2 = interaction_type['minConcept'][1]['rxcui']
+                interactions['{0},{1}'.format(d1, d2)] = interaction_pair['description']
     return interactions
 
 # TEST:
