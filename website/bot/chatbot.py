@@ -159,31 +159,7 @@ def check_for_goodbye(input):
     return resp
 
 def check_for_mention_of_drugs(input):
-<<<<<<< HEAD
-	resp = None
-	resp = []
-	drugs = []
-	# The drugs I'm currently taking are . . .
-	if input.find("are") >= 0:
-		drugs = [str(d).strip() for d in input[input.index("are"):].split()]
-	# Here's a list of the drugs I'm taking: . . .
-	elif input.find("taking") >= 0:
-		drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
-	# Please check these drugs for me . . .
-	elif input.find("check") >= 0:
-		drugs = [str(d).strip() for d in input[input.index("check"):].split()]
-	# [Some complicated way to give list of drugs] . . . Thanks!/Thank you!
-	elif input.find("thank") >= 0:
-		drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
-	if(len(drugs) > 0):
-		drugInteractionsDict = str(findDrugInteractions(list(map(rxNormId, drugs))))
-		resp = str(drugInteractionsDict)
-		if not resp:
-			resp = "I couldn't find anything. Would you like me to ask Siri?"
-	return resp
-=======
-    resp = None
-    resp = []
+    resp = ""
     drugs = []
     # The drugs I'm currently taking are . . .
     if input.find("are") >= 0:
@@ -198,16 +174,12 @@ def check_for_mention_of_drugs(input):
     elif input.find("thank") >= 0:
         drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
     if(len(drugs) > 0):
-        rxNormIds = list(map(rxNormId, drugs))
-        print(rxNormIds)
-        drugInteractionsDict = str(findDrugInteractions(map(rxNormId, drugs)))
-        # for rx in rxNormIds:
-        #     resp += str(drugInteractionsDict[rx]) + " "
-        resp = str(drugInteractionsDict)
+        drugInteractionsDict = findDrugInteractions(map(rxNormId, drugs))
+        for i in drugInteractionsDict.values():
+            resp += i + " "
         if not resp:
             resp = "I couldn't find anything. Would you like me to ask Siri?"
     return resp
->>>>>>> ab4ef7a3a8dd624f753d3d59260920153e6e6abb
 
 def check_for_comment_about_drugs(pronoun, noun, adjective):
     """Check if the user's input was about drugs, in which case try to fashion a response
