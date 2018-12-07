@@ -1,7 +1,7 @@
 import requests
 import json
 
-from rxnorm import *
+from .rxnorm import *
 
 URL = 'https://rxnav.nlm.nih.gov/REST/interaction/list.json'
 

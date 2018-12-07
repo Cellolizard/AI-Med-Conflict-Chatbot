@@ -15,9 +15,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import io
 from textblob import TextBlob
-from config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
-from interaction import findDrugInteractions
-from rxnorm import rxNormId
+from .config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
+from .interaction import findDrugInteractions
+from .rxnorm import rxNormId
 
 # DATA LOADING
 

@@ -1,4 +1,15 @@
-{% if latest_question_list %}
+<div>
+  <strong>Greeting:</strong>
+  <br>
+  <form action = "" method="post">
+    Type stuff here:
+    <input type ="text" stuff = "lulz"><br>
+  </form>
+  <span>{{ bot_response }}</span>
+</div>
+
+
+<!-- {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
         <li><a href="/bot/{{ question.id }}/">{{ question.question_text }}</a></li>
@@ -6,4 +17,10 @@
     </ul>
 {% else %}
     <p>No bot are available.</p>
-{% endif %}
+{% endif %} -->
+
+<!-- <form action="/your-name/" method="post">
+    <label for="your_name">Your name: </label>
+    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form> -->
