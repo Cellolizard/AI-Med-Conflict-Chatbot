@@ -12,6 +12,7 @@ URL = 'https://rxnav.nlm.nih.gov/REST/interaction/list.json'
 #   findDrugInteractions(names)
 
 def findDrugInteractions(rxcuis):
+    rxcuis = filter(None, rxcuis)
     resp = requests.get(URL + '?rxcuis=' + '+'.join(rxcuis))
     interactions = {}
     if resp.status_code != 200:
