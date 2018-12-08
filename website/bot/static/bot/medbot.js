@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     sessionStorage.clear();
+    $("#copyrightYear").text(new Date().getFullYear()); 
 });
 
 // Scroll to the bottom of ele, and play scroll animation
