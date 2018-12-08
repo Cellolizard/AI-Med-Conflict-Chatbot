@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+}
+main {
+  padding: 0 10px;
+}
+.medbot-header {
+  height: 3em;
+  width: 100%;
+  background: #d9d9d9;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.medbot-header h1 {
+  margin: 0;
+}

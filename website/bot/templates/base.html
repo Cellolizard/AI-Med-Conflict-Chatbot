@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}MedBot{% endblock %}</title>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bot/medbot.css' %}">
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
-    <header>
+    <header class="medbot-header">
+      <h1>MedBot</h1>
     </header>
     <main>
       {% block content %}
@@ -16,7 +17,7 @@
     <footer>
     </footer>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-    <!-- <script src="{% static 'js/app.js' %}"></script> -->
+    <script src="{% static 'bot/medbot.js' %}></script>
     {% block javascript %}{% endblock %}
   </body>
 </html>

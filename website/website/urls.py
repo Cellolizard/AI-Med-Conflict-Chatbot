@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +26,4 @@ urlpatterns = [
     path('', RedirectView.as_view(url='bot/', permanent=False)),
     path('bot/', include('bot.urls')),
     path('admin/', admin.site.urls),
-]
+ ]
