@@ -3,7 +3,7 @@
 {% block javascript %}
   <script>
     $("#converse").change(function () {
-      console.log( $(this).val() );
+      $( "#dvTextArea" ).append( "<span class='user-text'> >>> " + data.bot_response +"</span>" );
       var user_response = $(this).val();
       $.ajax({
         url: '/bot/converse_ajax',
@@ -12,7 +12,7 @@
         },
         dataType: 'json',
         success: function (data) {
-          $( "#dvTextArea" ).append( "<p> >>> " + data.bot_response +"</p>" );
+          $( "#dvTextArea" ).append( "<span class='bot-text'> >>> " + data.bot_response +"</span>" );
         }
       });
     });
@@ -20,8 +20,8 @@
 {% endblock %}
 
 {% block content %}
-<div style="display:flex; flex-direction:column; align-items: center; padding: 100px 20%;">
-    <div id="dvTextArea" style="background: #d9d9d9; width:100%; height:600px;">
+<div class="medbot-container">
+    <div id="dvTextArea" class="medbot-chatbox">
     </div>
     <input id="converse" type="text"  name="converse" style="width:100%;" value="{{ current_name }}">
 </div>
