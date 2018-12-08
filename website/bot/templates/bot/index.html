@@ -12,7 +12,7 @@
         },
         dataType: 'json',
         success: function (data) {
-          console.log(data);
+          $( "#dvTextArea" ).append( "<p> >>> " + data.bot_response +"</p>" );
         }
       });
     });
@@ -21,7 +21,7 @@
 
 {% block content %}
 <div style="display:flex; flex-direction:column; align-items: center; padding: 100px 20%;">
-    <div style="background: #d9d9d9; width:100%; height:600px;">
+    <div id="dvTextArea" style="background: #d9d9d9; width:100%; height:600px;">
     </div>
     <input id="converse" type="text"  name="converse" style="width:100%;" value="{{ current_name }}">
 </div>
