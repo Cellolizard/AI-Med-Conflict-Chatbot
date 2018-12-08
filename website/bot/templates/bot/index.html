@@ -20,18 +20,7 @@
 {% endblock %}
 
 {% block content %}
-<form action = "/bot/converse" method="post">
-  <div>
-    <br>
-    <br>
-    <label for="converse"> >>> </label>
-    <!-- <input id="converse" type="text" name="converse" value="{{ current_name }}"> -->
-    <input type="submit" value="OK">
-    <br>
-    <br>
-    <span> >>> </span>
-    <span>{{ bot_response }}</span>
-  </div>
-</form>
-<input id="converse" type="text" name="converse" value="{{ current_name }}">
+
+<input id="converse" type="text" name="converse">
+
 {% endblock %}
