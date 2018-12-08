@@ -25,16 +25,19 @@
         }
       });
       $(this).val("");
+      scroll.call($( "#dvTextArea" ), this);
     });
   </script>
 {% endblock %}
 
 {% block content %}
 <div class="medbot-container">
-    <div id="dvTextArea" class="medbot-chatbox">
-      <span class="bot-text"><strong>MedBot:</strong> Hi, I'm MedBot! Tell me your name in the text box below...</span>
-      <br>
+    <div class="medbot-chatbox">
+      <div id="dvTextArea" class="chatbox-scroll">
+        <span class="bot-text"><strong>MedBot:</strong> Hi, I'm MedBot! Tell me your name in the text box below...</span>
+        <br>
+      </div>
+      <input id="converse" type="text" class="medbot-input" placeholder="Say something...">
     </div>
-    <input id="converse" type="text"  name="converse" style="width:100%;" value="{{ current_name }}">
 </div>
 {% endblock %}

@@ -9,15 +9,17 @@
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
-    <header class="medbot-header">
+    <main>
       <div class = "medbot-header">
-        <img src="{% static 'bot/MedBot_transparent_background.png' %}" width="75" height="105" alt="MedBot" />
+        <div class="img-wrapper">
+          <img src="{% static 'bot/MedBot_transparent_background.png' %}" width="75" height="105" alt="MedBot" />
+        </div>
         <h1>MedBot</h1>
     </div>
-    </header>
-    <main>
-      {% block content %}
-      {% endblock %}
+      <div class="medbot-main">
+        {% block content %}
+        {% endblock %}
+      </div>
     </main>
     <footer>
     </footer>
