@@ -38,6 +38,28 @@ main {
   position: center;
 }
 
+.medbot-footer {
+  height: 5em;
+  width: 100%;
+  background: #cae7f9;
+  margin: 0;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
+}
+
+.medbot-footer-center {
+}
+
+.medbot-footer-icons {
+  font-size: 2em;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
 .medbot-container {
   display: flex;
   flex-direction: column;
