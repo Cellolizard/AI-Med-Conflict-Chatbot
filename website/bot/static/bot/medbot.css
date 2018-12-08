@@ -113,6 +113,7 @@ main {
 
 .bot-text {
   padding: 5px;
+  font-style: italic;
 }
 
 ::-webkit-scrollbar {

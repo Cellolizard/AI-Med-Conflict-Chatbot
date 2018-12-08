@@ -14,12 +14,12 @@
         return;
       if(sessionStorage.getItem('name') == null) {
         sessionStorage.setItem('name', $("#converse").val());
-        $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
+        $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
         $( "#dvTextArea" ).append("<br>");
         $("#converse").val("");
         return;
       }
-      $( "#dvTextArea" ).append( "<span class='user-text'> <strong>" + sessionStorage.getItem('name') +":</strong> " + $("#converse").val() +"</span>" );
+      $( "#dvTextArea" ).append( "<strong> " + sessionStorage.getItem('name') +":</strong><span class='user-text'>" + $("#converse").val() +"</span>" );
       $( "#dvTextArea" ).append("<br>");
       user_response = $("#converse").val();
       $.ajax({
@@ -29,7 +29,7 @@
         },
         dataType: 'json',
         success: function (data) {
-          $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> " + data.bot_response +"</span>" );
+          $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>" + data.bot_response +"</span>" );
           $( "#dvTextArea" ).append("<br>");
         }
       });
@@ -43,7 +43,7 @@
 <div class=" medbot-container">
     <div class="container medbot-chatbox">
       <div id="dvTextArea" class="chatbox-scroll">
-        <span class="bot-text"><strong>MedBot:</strong> Hi, I'm MedBot! Tell me your name in the text box below...</span>
+        <strong>MedBot:</strong><span class="bot-text">Hi, I'm MedBot! Tell me your name in the text box below...</span>
         <br>
       </div>
       <!-- <input id="converse" type="text" class="medbot-input" placeholder="Say something..."> -->
