@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <form action = "/bot/converse" method="post">
   <div>
     <strong>Greeting:</strong>
@@ -12,3 +15,4 @@
     <span>{{ bot_response }}</span>
   </div>
 </form>
+{% endblock %}
