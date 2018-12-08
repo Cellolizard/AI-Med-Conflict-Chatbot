@@ -2,17 +2,20 @@
 
 {% block javascript %}
   <script>
-    $("#converse").change(function () {
+    $("#converse").change(function() {
+      $("#submit").click();
+    });
+    $("#submit").click(function () {
       if(sessionStorage.getItem('name') == null) {
-        sessionStorage.setItem('name', $(this).val());
+        sessionStorage.setItem('name', $("#converse").val());
         $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
         $( "#dvTextArea" ).append("<br>");
         $(this).val("");
         return;
       }
-      $( "#dvTextArea" ).append( "<span class='user-text'> <strong>" + sessionStorage.getItem('name') +":</strong> " + $(this).val() +"</span>" );
+      $( "#dvTextArea" ).append( "<span class='user-text'> <strong>" + sessionStorage.getItem('name') +":</strong> " + $("#converse").val() +"</span>" );
       $( "#dvTextArea" ).append("<br>");
-      user_response = $(this).val();
+      user_response = $("#converse").val();
       $.ajax({
         url: '/bot/converse_ajax',
         data: {
@@ -24,20 +27,32 @@
           $( "#dvTextArea" ).append("<br>");
         }
       });
-      $(this).val("");
+      $("#converse").val("");
       scroll.call($( "#dvTextArea" ), this);
     });
   </script>
 {% endblock %}
 
 {% block content %}
-<div class="medbot-container">
-    <div class="medbot-chatbox">
+<div class=" medbot-container">
+    <div class="container medbot-chatbox">
       <div id="dvTextArea" class="chatbox-scroll">
         <span class="bot-text"><strong>MedBot:</strong> Hi, I'm MedBot! Tell me your name in the text box below...</span>
         <br>
       </div>
-      <input id="converse" type="text" class="medbot-input" placeholder="Say something...">
+      <!-- <input id="converse" type="text" class="medbot-input" placeholder="Say something..."> -->
+      <div class="row">
+        <div class="col-lg-12">
+      <div class="input-group mb-3">
+          <input id="converse" type="text" class="form-control medbot-input" placeholder="Say something...">
+          <div class="input-group-append">
+              <button id="submit" class="btn btn-outline-secondary medbot-submit" type="button">
+              ↵ Enter
+              </button>
+          </div>
+      </div>
+      </div>
+      </div>
     </div>
 </div>
 {% endblock %}
