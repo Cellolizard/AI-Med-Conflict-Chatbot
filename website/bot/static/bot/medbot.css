@@ -13,7 +13,7 @@ main {
   height: 100%;
 }
 .medbot-main {
-  margin: 25px 10px;
+  margin: 50px 10px 25px;
   height: 70%;
 }
 .medbot-header {
@@ -25,6 +25,9 @@ main {
   display: flex;
   align-items: center;
   position: relative;
+  -webkit-box-shadow: -4px 18px 39px -8px rgba(127,135,140,1);
+  -moz-box-shadow: -4px 18px 39px -8px rgba(127,135,140,1);
+  box-shadow: -4px 18px 39px -8px rgba(127,135,140,1);
 }
 .medbot-header h1 {
   position: center;
@@ -55,20 +58,20 @@ main {
   position: relative;
 }
 .chatbox-scroll {
-  /* box-sizing: content-box; */
   height: 100%;
   overflow-y: auto;
-  /* margin-bottom: 2.8em; */
 }
 .medbot-input {
-  /* position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0; */
   width: 100%;
-  line-height: 2.2em;
+  /* line-height: 2.2em; */
   border-radius: 7px;
-  border: 3px solid #cae7f9;
+  /* border: 3px solid #cae7f9; */
+}
+.medbot-submit {
+  border-left: 0;
+  border-color: rgb(206, 212, 218);
+  color: #6C757D;
+  background-color: #fff;
 }
 .user-text {
   padding: 5px;
