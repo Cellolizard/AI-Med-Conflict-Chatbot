@@ -10,7 +10,7 @@
         sessionStorage.setItem('name', $("#converse").val());
         $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
         $( "#dvTextArea" ).append("<br>");
-        $(this).val("");
+        $("#converse").val("");
         return;
       }
       $( "#dvTextArea" ).append( "<span class='user-text'> <strong>" + sessionStorage.getItem('name') +":</strong> " + $("#converse").val() +"</span>" );
