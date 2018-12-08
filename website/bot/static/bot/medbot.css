@@ -16,3 +16,21 @@ main {
 .medbot-header h1 {
   margin: 0;
 }
+
+.medbot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+}
+
+.medbot-chatbox {
+  background: #d9d9d9
+  width: 600px;
+  height: 600px;
+}
+
+* {
+  box-sizing: border-box;
+}
