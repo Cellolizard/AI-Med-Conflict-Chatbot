@@ -5,7 +5,7 @@ main {
   padding: 0 10px;
 }
 .medbot-header {
-  height: 3em;
+  height: 7em;
   width: 100%;
   background: #cae7f9;
   margin: 0;
@@ -14,7 +14,14 @@ main {
   align-items: center;
 }
 .medbot-header h1 {
-  margin: 0;
+  position: center;
+  padding-left: 16px;
+}
+
+.medbot-header img {
+  position: center;
+  padding-bottom: 5px;
+  float: left;
 }
 
 .medbot-container {
