@@ -29,7 +29,7 @@ os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
 nltk.download('punkt')
 nltk.download('wordnet')
 
-f=open('corpora.txt', 'r', errors= 'ignore')
+#f=open('corpora.txt', 'r', errors= 'ignore')
 raw=f.read()
 raw=raw.lower()
 
