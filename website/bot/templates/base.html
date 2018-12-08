@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>{% block title %}MedBot{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="{% static 'bot/medbot.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'bot/MedBot.png' %}"/>
     {% block stylesheet %}{% endblock %}
@@ -21,7 +22,36 @@
         {% endblock %}
       </div>
     </main>
-    <footer>
+    <footer class="medbot-footer">
+      <div class = "medbot-footer-center">
+        <!-- Footer Elements -->
+            <div class="medbot-footer-icons">
+              <!-- GitHub -->
+              <span>
+                <a href="https://github.com/Cellolizard/AI-Med-Conflict-Chatbot" target="_blank">
+                  <i class="fab fa-github"></i>
+                </a>
+              </span>
+              <!--Linkedin -->
+              <span>
+                <a href="https://www.linkedin.com/in/mitchell-rudoll/" onclick="location.href='https://www.linkedin.com/in/j-oliver-whittlef-8244a5134/';" target="_blank">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </span>
+              <!--Instagram-->
+              <span>
+                <a href="https://www.instagram.com/cellolizard_/" onclick="location.href='https://www.instagram.com/oliverwhittlef/';" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </span>
+            </div>
+      <!-- Footer Elements -->
+      <!-- Copyright -->
+      <div>© 2018 Copyright:
+        <a href="https://mitchellrudoll.com/" target="_blank"> Mitchell Rudoll</a> and Oliver Whittlef
+      </div>
+      <!-- Copyright -->
+    </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="{% static 'bot/medbot.js' %}"></script>

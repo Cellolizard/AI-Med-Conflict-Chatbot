@@ -28,6 +28,7 @@ main {
   -webkit-box-shadow: -4px 18px 39px -8px rgba(127,135,140,1);
   -moz-box-shadow: -4px 18px 39px -8px rgba(127,135,140,1);
   box-shadow: -4px 18px 39px -8px rgba(127,135,140,1);
+  padding-left: 25px;
 }
 .medbot-header h1 {
   position: center;
@@ -38,6 +39,28 @@ main {
   position: absolute;
   bottom: 0;
   position: center;
+}
+
+.medbot-footer {
+  height: 5em;
+  width: 100%;
+  background: #cae7f9;
+  margin: 0;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
+}
+
+.medbot-footer-center {
+}
+
+.medbot-footer-icons {
+  font-size: 2em;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
 }
 
 .medbot-container {

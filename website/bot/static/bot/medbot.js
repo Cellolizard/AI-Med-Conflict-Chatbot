@@ -8,5 +8,5 @@ function scroll(ele) {
     var height = ele.scrollHeight;
     this.stop().animate({
       scrollTop: height
-    }, 1000});
+    }, 1000);
   };
