@@ -6,5 +6,6 @@ from . import views
 urlpatterns = [
     # ex: /bot/
     path('', views.index, name='index'),
-    path('converse', views.conversation_view)
+    path('converse', views.conversation_view),
+    path('converse_ajax', views.conversation_ajax)
 ]

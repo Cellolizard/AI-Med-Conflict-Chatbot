@@ -4,6 +4,17 @@
   <script>
     $("#converse").change(function () {
       console.log( $(this).val() );
+      var user_response = $(this).val();
+      $.ajax({
+        url: '/bot/converse_ajax',
+        data: {
+          'response': user_response
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log(data);
+        }
+      });
     });
   </script>
 {% endblock %}
@@ -14,7 +25,7 @@
     <br>
     <br>
     <label for="converse"> >>> </label>
-    <input id="converse" type="text" name="converse" value="{{ current_name }}">
+    <!-- <input id="converse" type="text" name="converse" value="{{ current_name }}"> -->
     <input type="submit" value="OK">
     <br>
     <br>
@@ -22,4 +33,5 @@
     <span>{{ bot_response }}</span>
   </div>
 </form>
+<input id="converse" type="text" name="converse" value="{{ current_name }}">
 {% endblock %}
