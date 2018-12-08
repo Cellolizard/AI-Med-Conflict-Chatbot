@@ -6,6 +6,8 @@
       $("#submit").click();
     });
     $("#submit").click(function () {
+      if($("#converse").val() == "")
+        return;
       if(sessionStorage.getItem('name') == null) {
         sessionStorage.setItem('name', $("#converse").val());
         $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
