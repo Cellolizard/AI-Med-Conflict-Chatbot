@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block javascript %}
+  <script>
+    $("#converse").change(function () {
+      console.log( $(this).val() );
+    });
+  </script>
+{% endblock %}
+
 {% block content %}
 <form action = "/bot/converse" method="post">
   <div>
