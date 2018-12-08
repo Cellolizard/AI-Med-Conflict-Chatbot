@@ -25,6 +25,7 @@ main {
   display: flex;
   align-items: center;
   position: relative;
+  padding-left: 25px;
 }
 .medbot-header h1 {
   position: center;
