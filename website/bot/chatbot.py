@@ -1,6 +1,7 @@
 # Mitchell Rudoll and Oliver Whittlef
 
-# Inspiration drawn from NLTK Eliza and https://github.com/lizadaly/brobot/blob/master/broize.py
+# Inspiration drawn from NLTK Eliza, https://github.com/lizadaly/brobot/blob/master/broize.py,
+# and https://github.com/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/blob/master/chatbot.py
 
 # IMPORTS
 
@@ -14,6 +15,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 import io
+import warnings
+warnings.filterwarnings("ignore")
 from textblob import TextBlob
 from .config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
 from .interaction import findDrugInteractions
@@ -25,6 +28,13 @@ os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
 
 nltk.download('punkt')
 nltk.download('wordnet')
+
+f=open('corpora.txt', 'r', errors= 'ignore')
+raw=f.read()
+raw=raw.lower()
+
+sent_tokens = nltk.sent_tokenize(raw)
+word_tokens = nltk.word_tokenize(raw)
 
 # Dictionary of drug names used
 
@@ -255,6 +265,7 @@ def respond(sentence):
     # if not resp:
     #     resp = respond(parsed)
 
+
     if not resp:
         # If we didn't override the final sentence, try to construct a new one:
         if not pronoun:
@@ -273,10 +284,30 @@ def respond(sentence):
 
     return resp
 
+def respond_normal(sentence):
+    resp = ''
+    sent_tokens.append(sentence)
+    TfidVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
+    tfidf = TfidVec.fit_transform(sent_tokens)
+    vals = cosine_similarity(tfidf[-1], tfidf)
+    idx = vals.argsort()[0][-2]
+    flat = vals.flatten()
+    flat.sort()
+    req_tfidf = flat[-2]
+    if(req_tfidf==0):
+        resp = resp + "I apologize, but I don't understand what you're saying."
+    else:
+        resp = resp + sent_tokens[idx]
+        return resp
+
 #DRIVER
 
 def converse(sentence):
     resp = respond(sentence)
+    return resp
+
+def converse_normal(sentence):
+    resp = respond_normal(sentence)
     return resp
 
 if __name__ == '__main__':
