@@ -93,6 +93,7 @@ main {
 .chatbox-scroll {
   height: 100%;
   overflow-y: auto;
+  margin: 10px 0;
 }
 .medbot-input {
   width: 100%;
