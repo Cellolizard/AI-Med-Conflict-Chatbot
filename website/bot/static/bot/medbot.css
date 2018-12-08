@@ -28,7 +28,16 @@ main {
   background: #d9d9d9;
   width: 100%;
   height: 600px;
-  overflow: scroll;
+  overflow-y: scroll;
+  border-radius: 3px;
+}
+
+.user-text {
+  padding: 3px;
+}
+
+.bot-text {
+  padding: 3px;
 }
 
 * {
