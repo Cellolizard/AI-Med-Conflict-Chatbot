@@ -3,8 +3,16 @@
 {% block javascript %}
   <script>
     $("#converse").change(function () {
-      $( "#dvTextArea" ).append( "<span class='user-text'> >>> " + data.bot_response +"</span>" );
-      var user_response = $(this).val();
+      if(sessionStorage.getItem('name') == null) {
+        sessionStorage.setItem('name', $(this).val());
+        $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
+        $( "#dvTextArea" ).append("<br>");
+        $(this).val("");
+        return;
+      }
+      $( "#dvTextArea" ).append( "<span class='user-text'> <strong>" + sessionStorage.getItem('name') +":</strong> " + $(this).val() +"</span>" );
+      $( "#dvTextArea" ).append("<br>");
+      user_response = $(this).val();
       $.ajax({
         url: '/bot/converse_ajax',
         data: {
@@ -12,9 +20,11 @@
         },
         dataType: 'json',
         success: function (data) {
-          $( "#dvTextArea" ).append( "<span class='bot-text'> >>> " + data.bot_response +"</span>" );
+          $( "#dvTextArea" ).append( "<span class='bot-text'> <strong>MedBot:</strong> " + data.bot_response +"</span>" );
+          $( "#dvTextArea" ).append("<br>");
         }
       });
+      $(this).val("");
     });
   </script>
 {% endblock %}
@@ -22,6 +32,8 @@
 {% block content %}
 <div class="medbot-container">
     <div id="dvTextArea" class="medbot-chatbox">
+      <span class="bot-text"><strong>MedBot:</strong> Hi, I'm MedBot! Tell me your name in the text box below...</span>
+      <br>
     </div>
     <input id="converse" type="text"  name="converse" style="width:100%;" value="{{ current_name }}">
 </div>
