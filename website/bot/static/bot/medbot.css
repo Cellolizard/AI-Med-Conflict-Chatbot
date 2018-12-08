@@ -8,6 +8,7 @@ html {
 body {
   margin: 0;
   height: 100%;
+  background-color: #dfe3ee;
 }
 main {
   height: 100%;
@@ -63,6 +64,14 @@ main {
   padding: 8px;
 }
 
+.medbot-footer-icons-color {
+  color:#6c757d;
+}
+
+.medbot-footer-icons-color:hover {
+  color:#3C454C;
+}
+
 .medbot-container {
   display: flex;
   flex-direction: column;
@@ -74,11 +83,12 @@ main {
 .medbot-chatbox {
   display: flex;
   flex-direction: column;
-  background: #cae7f9;
+  background: #f7f7f7;
   width: 100%;
   height: 100%;
   border-radius: 7px;
   position: relative;
+  border-color: #8b9dc3;
 }
 .chatbox-scroll {
   height: 100%;
