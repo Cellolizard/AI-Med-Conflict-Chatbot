@@ -2,6 +2,10 @@
 
 {% block javascript %}
   <script>
+    function scroll() {
+        var height = $('#dvTextArea')[0].scrollHeight;
+        $('#dvTextArea').scrollTop(height);
+    };
     $("#converse").change(function() {
       $("#submit").click();
     });
