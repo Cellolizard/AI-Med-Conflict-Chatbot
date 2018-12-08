@@ -30,9 +30,9 @@ nltk.download('punkt')
 nltk.download('wordnet')
 
 #f=open('corpora.txt', 'r', errors= 'ignore')
-raw=f.read()
-raw=raw.lower()
-
+#raw=f.read()
+#raw=raw.lower()
+raw = "lulz"
 sent_tokens = nltk.sent_tokenize(raw)
 word_tokens = nltk.word_tokenize(raw)
 
