@@ -18,7 +18,6 @@ def conversation_view(request):
             return render(request, 'bot/index.html', context)
 @csrf_exempt
 def conversation_ajax(request):
-    print("got there")
     response = request.GET.get('response', None)
     bot_response = converse(response)
     data = {
@@ -27,7 +26,6 @@ def conversation_ajax(request):
     return JsonResponse(data)
 @csrf_exempt
 def index(request):
-    print('Called the wrong thing')
     bot_response = converse('hello')
     context = {'bot_response': bot_response}
     return render(request, 'bot/index.html', context)
