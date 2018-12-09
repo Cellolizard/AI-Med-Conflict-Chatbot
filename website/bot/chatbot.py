@@ -3,7 +3,7 @@
 # Inspiration drawn from NLTK Eliza, https://github.com/lizadaly/brobot/blob/master/broize.py,
 # and https://github.com/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/blob/master/chatbot.py
 
-# IMPORTS 
+# IMPORTS
 
 from __future__ import print_function, unicode_literals
 import nltk
@@ -78,6 +78,8 @@ def find_pronoun(sent):
         # Disambiguate pronouns
         if part_of_speech == 'PRP' and word.lower() == 'you':
             pronoun = 'I'
+        elif part_of_speech == 'PRP' and word.lower() == 'your':
+            pronoun = 'my'
         elif part_of_speech == 'PRP' and word == 'I':
             # If the user mentioned themselves, then they will definitely be the pronoun
             pronoun = 'You'
@@ -147,11 +149,12 @@ def construct_response(pronoun, noun, verb):
 
     return " ".join(resp)
 
-def check_for_comment_about_bot(pronoun, noun, adjective):
-    """Check if the user's input was about the bot itself, in which case try to fashion a response
-    that feels right based on their input. Returns the new best sentence, or None."""
+def check_for_comment_about_bot(pronoun, noun, adjective, verb):
+    # checks if the user's response is about the bot
     resp = None
-    if pronoun == 'I' and (noun or adjective):
+    if pronoun == 'I' and verb == 'are':
+        resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective' : adjective })
+    elif pronoun == 'I' and (noun or adjective):
         if noun:
             if random.choice((True, False)):
                 resp = random.choice(SELF_VERBS_WITH_NOUN_CAPS_PLURAL).format(**{'noun': noun.pluralize().capitalize()})
@@ -268,6 +271,8 @@ def respond(sentence):
         resp = check_for_greeting(parsed)
     if not resp:
         resp = check_for_goodbye(parsed)
+    if not resp:
+        resp = check_for_comment_about_bot(pronoun, noun, adjective, verb)
 
     # if we get through our rules, just respond using a corpora
     if not resp:

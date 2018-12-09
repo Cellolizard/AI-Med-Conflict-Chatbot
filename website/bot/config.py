@@ -107,12 +107,21 @@ COMMENTS_ABOUT_SELF = [
 
 SELF_VERBS_WITH_NOUN_CAPS_PLURAL = [
     "My {noun} is the best you've ever seen.",
+    "I'm actually quite proud of my {noun}.",
+    "Why are we talking about my {noun}? Let's talk about you.",
+    "I guess. But enough about my {noun}, let's discuss you!",
 ]
 
 SELF_VERBS_WITH_NOUN_LOWER = [
-    "Yeah but I know a lot about {noun}",
+    "Yeah, but I know a lot about {noun}s. The Internet is my brain.",
+    "I actually don't know much about {noun}, as I'm just a robot.",
+    "Hmm, interesting, but I can't think for myself about {noun} given the whole being a program thing.",
+    "I do happen to know some things about {noun}.",
 ]
 
 SELF_VERBS_WITH_ADJECTIVE = [
-    "I consider myself to be a {adjective}preneur",
+    "I consider myself to be a {adjective} individual.",
+    "I can often be inclined to do {adjective} things, yes.",
+    "Occasionally, {adjective} activities really pass the time.",
+    "Don't you do {adjective} things in your daily routine?",
 ]
