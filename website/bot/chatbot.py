@@ -41,6 +41,8 @@ class NoNoWordsException(Exception):
 1
 # FUNCTIONS
 
+remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
+
 def add_to_client_drug_names(rxNormId, dictPair):
     user_drug_names[rxNormId] = dictPair
     return True
@@ -159,18 +161,20 @@ def check_for_goodbye(input):
     return resp
 
 def check_for_mention_of_drugs(input):
+    # tokens = nltk.pos_tag(nltk.word_tokenize(str(input.lower())))
+    # nouns = list(filter(lambda x, t : t == "NN", tokens))
+    # print(tokens)
+    # print(nouns)
+    # resp = "Yeet! *dabs*"
+    # return resp
     resp = ""
     drugs = []
-    # The drugs I'm currently taking are . . .
     if input.find("are") >= 0:
         drugs = [str(d).strip() for d in input[input.index("are"):].split()]
-    # Here's a list of the drugs I'm taking: . . .
     elif input.find("taking") >= 0:
         drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
-    # Please check these drugs for me . . .
     elif input.find("check") >= 0:
         drugs = [str(d).strip() for d in input[input.index("check"):].split()]
-    # [Some complicated way to give list of drugs] . . . Thanks!/Thank you!
     elif input.find("thank") >= 0:
         drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
     if(len(drugs) > 0):
@@ -217,8 +221,6 @@ lemmer = nltk.stem.WordNetLemmatizer()
 def LemTokens(tokens):
     return [lemmer.lemmatize(token) for token in tokens]
 
-remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
-
 def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
@@ -245,8 +247,8 @@ def respond(sentence):
     resp = None
     if not resp:
         resp = check_for_mention_of_drugs(parsed)
-    if not resp:
-        resp = check_for_comment_about_drugs(pronoun, noun, adjective)
+    # if not resp:
+    #     resp = check_for_comment_about_drugs(pronoun, noun, adjective)
     if not resp:
         resp = check_for_greeting(parsed)
     if not resp:
