@@ -343,11 +343,11 @@ def respond_normal(sentence):
 
 def converse(sentence):
     resp = respond(sentence)
-    return resp
+    return resp.capitalize()
 
 def converse_normal(sentence):
     resp = respond_normal(sentence)
-    return resp
+    return resp.capitalize()
 
 if __name__ == '__main__':
     print("Bot: Hello, my name is Dr. Web MD. Please feel free to ask me any questions you may have regarding the medicines you're taking.")
