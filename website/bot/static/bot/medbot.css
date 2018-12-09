@@ -132,6 +132,12 @@ main {
   background-color: #fff;
 }
 
+.medbot-submit-modal {
+  border-color: rgb(206, 212, 218);
+  color: #6C757D;
+  background-color: #fff;
+}
+
 .user-text {
   padding: 5px;
 }

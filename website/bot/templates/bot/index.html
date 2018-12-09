@@ -4,6 +4,10 @@
 
 {% block javascript %}
   <script>
+    $( document ).ready(function() {
+      $("#nameModal").show();
+      //$("#nameModal").modal('hide').on("#nameInputSubmit");
+    });
     function scroll() {
         var height = Number.MAX_SAFE_INTEGER;
         $('#dvTextArea').scrollTop(height);
@@ -54,6 +58,23 @@
 {% block content %}
 <div class=" medbot-container">
     <div class="container medbot-chatbox">
+
+      <div id="nameModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 style="text-align: center" class="modal-title">Please type your name below: </h5>
+            </div>
+            <div class="modal-body">
+              <input id="nameInputBox" type="text" class="form-control medbot-input" placeholder="ex. 'MedBot'">
+            </div>
+            <div class="modal-footer">
+              <button id="nameInputSubmit" type="button" class="btn btn-outline-secondary medbot-submit-modal">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <img id="loadingGif" src="{% static 'bot/loading-ring.gif' %}" class="loading" style="display:None">
       <div id="dvTextArea" class="chatbox-scroll">
         <strong>MedBot:</strong><span class="bot-text">Hi, I'm MedBot! Tell me your name in the text box below...</span>
