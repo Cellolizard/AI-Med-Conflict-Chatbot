@@ -158,15 +158,22 @@ def construct_response(pronoun, noun, verb):
 def check_for_comment_about_bot(pronoun, noun, adjective, verb):
     # checks if the user's response is about the bot
     resp = None
+    # if pronoun == 'I':
+    #     resp = "You're talking about me."
     if pronoun == 'I' and verb == 'are':
+        print("case 1")
         resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective' : adjective })
     elif pronoun == 'I' and (noun or adjective):
         if noun:
+            # you are a funky bot
+            print("case 2")
             if random.choice((True, False)):
                 resp = random.choice(SELF_VERBS_WITH_NOUN_CAPS_PLURAL).format(**{'noun': noun.pluralize().capitalize()})
             else:
+                print("case 3")
                 resp = random.choice(SELF_VERBS_WITH_NOUN_LOWER).format(**{'noun': noun})
         else:
+            print("case 4")
             resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective': adjective})
     return resp
 
