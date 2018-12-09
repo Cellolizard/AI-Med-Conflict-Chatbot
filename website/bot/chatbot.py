@@ -23,6 +23,7 @@ from textblob import TextBlob
 from .config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
 from .interaction import findDrugInteractions
 from .rxnorm import rxNormId
+from nltk.corpus import stopwords
 
 # DATA LOADING
 
@@ -33,6 +34,7 @@ os.environ['NLTK_DATA'] = p + '/nltk_data/'
 # make sure required files are downloaded, but don't print to console
 nltk.download('punkt', quiet=True)
 nltk.download('wordnet', quiet=True)
+nltk.download('stopwords', quiet=True)
 
 module_dir = os.path.dirname(__file__)
 file_path = os.path.join(module_dir, 'corpora.txt')
@@ -42,6 +44,8 @@ raw=raw.lower()
 
 sent_tokens = nltk.sent_tokenize(raw)
 word_tokens = nltk.word_tokenize(raw)
+
+stop_words = set(stopwords.words('english'))
 
 # Dictionary of drug names used
 
@@ -57,6 +61,8 @@ class NoNoWordsException(Exception):
     pass
 1
 # FUNCTIONS
+
+remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 
 def add_to_client_drug_names(rxNormId, dictPair):
     user_drug_names[rxNormId] = dictPair
@@ -180,35 +186,50 @@ def check_for_goodbye(input):
 
 def check_for_mention_of_drugs(input):
     resp = ""
-    drugs = []
-    # The drugs I'm currently taking are . . .
-    if input.find("are") >= 0:
-        drugs = [str(d).strip() for d in input[input.index("are"):].split()]
-    # Here's a list of the drugs I'm taking: . . .
-    elif input.find("taking") >= 0:
-        drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
-    # Please check these drugs for me . . .
-    elif input.find("check") >= 0:
-        drugs = [str(d).strip() for d in input[input.index("check"):].split()]
-    # [Some complicated way to give list of drugs] . . . Thanks!/Thank you!
-    elif input.find("thank") >= 0:
-        drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
-    if(len(drugs) > 0):
-        drugInteractionsDict = findDrugInteractions(map(rxNormId, drugs))
-        for i in drugInteractionsDict.values():
-            resp += i + " "
-        if not resp:
-            resp = "I couldn't find anything. Would you like me to ask Siri?"
+    stopwords_drugs = stop_words;
+    stopwords_drugs.update(["currently", "today", "right", "weekday", "week", "day"]) # add more later!
+    potential_drugs = []
+    for sent in input.sentences:
+        for word, typ in sent.pos_tags:
+            if typ in ("RB", "CC", "NN", "JJ") and word not in stopwords_drugs:
+                potential_drugs.append(word)
+    if(len(potential_drugs) < 2):
+        return resp
+    rxnorms = map(rxNormId, potential_drugs)
+    rxnorms = list(filter(None, rxnorms))
+    if(len(rxnorms) < 2):
+        return resp
+    drugInteractionsDict = findDrugInteractions(rxnorms)
+    for i in drugInteractionsDict.values():
+        print(i)
+        resp += i + " "
     return resp
-
-def check_for_comment_about_drugs(pronoun, noun, adjective):
-    """Check if the user's input was about drugs, in which case try to fashion a response
-    that feels right based on their input. Returns the new best sentence, or None."""
-    resp = None
-    if noun and noun.lower() in ["drugs", "medicine", "medication"]:
-        names = ('tylenol', 'ibuprofen', 'viagra')
-        resp = str(findDrugInteractions(map(rxNormId, names)))
-    return resp
+#     resp = ""
+#     drugs = []
+#     if input.find("are") >= 0:
+#         drugs = [str(d).strip() for d in input[input.index("are"):].split()]
+#     elif input.find("taking") >= 0:
+#         drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
+#     elif input.find("check") >= 0:
+#         drugs = [str(d).strip() for d in input[input.index("check"):].split()]
+#     elif input.find("thank") >= 0:
+#         drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
+#     if(len(drugs) > 0):
+#         drugInteractionsDict = findDrugInteractions(map(rxNormId, drugs))
+#         for i in drugInteractionsDict.values():
+#             resp += i + " "
+#         if not resp:
+#             resp = "I couldn't find anything. Would you like me to ask Siri?"
+#     return resp
+#
+# def check_for_comment_about_drugs(pronoun, noun, adjective):
+#     """Check if the user's input was about drugs, in which case try to fashion a response
+#     that feels right based on their input. Returns the new best sentence, or None."""
+#     resp = None
+#     if noun and noun.lower() in ["drugs", "medicine", "medication"]:
+#         names = ('tylenol', 'ibuprofen', 'viagra')
+#         resp = str(findDrugInteractions(map(rxNormId, names)))
+#     return resp
 
 def find_candidate_parts_of_speech(parsed):
     """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
@@ -237,8 +258,6 @@ lemmer = nltk.stem.WordNetLemmatizer()
 def LemTokens(tokens):
     return [lemmer.lemmatize(token) for token in tokens]
 
-remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
-
 def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
@@ -265,8 +284,8 @@ def respond(sentence):
     resp = None
     if not resp:
         resp = check_for_mention_of_drugs(parsed)
-    if not resp:
-        resp = check_for_comment_about_drugs(pronoun, noun, adjective)
+    # if not resp:
+    #     resp = check_for_comment_about_drugs(pronoun, noun, adjective)
     if not resp:
         resp = check_for_greeting(parsed)
     if not resp:
