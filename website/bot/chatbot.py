@@ -7,6 +7,7 @@
 
 from __future__ import print_function, unicode_literals
 import nltk
+from nltk.corpus import wordnet
 import numpy as np
 import random
 import string
@@ -15,6 +16,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 import io
+import os.path as path
 import warnings
 warnings.filterwarnings("ignore")
 from textblob import TextBlob
@@ -24,10 +26,13 @@ from .rxnorm import rxNormId
 
 # DATA LOADING
 
-os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
+p = path.abspath(path.join(__file__, "../../.."))
 
-nltk.download('punkt')
-nltk.download('wordnet')
+os.environ['NLTK_DATA'] = p + '/nltk_data/'
+
+# make sure required files are downloaded, but don't print to console
+nltk.download('punkt', quiet=True)
+nltk.download('wordnet', quiet=True)
 
 module_dir = os.path.dirname(__file__)
 file_path = os.path.join(module_dir, 'corpora.txt')
