@@ -16,7 +16,12 @@
           <img src="{% static 'bot/MedBot_transparent_background.png' %}" width="75" height="105" alt="MedBot" />
         </div>
         <h1>MedBot</h1>
-    </div>
+        <div class = "medbot-header-disclaimer">
+          <button id="disclaimer" class="btn btn-outline-secondary medbot-submit" type="button">
+          <i class="fas fa-exclamation-circle"></i> Disclaimer
+          </button>
+        </div>
+      </div>
       <div class="medbot-main">
         {% block content %}
         {% endblock %}
