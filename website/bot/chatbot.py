@@ -29,10 +29,12 @@ os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
 nltk.download('punkt')
 nltk.download('wordnet')
 
-#f=open('corpora.txt', 'r', errors= 'ignore')
-#raw=f.read()
-#raw=raw.lower()
-raw = "lulz"
+module_dir = os.path.dirname(__file__)
+file_path = os.path.join(module_dir, 'corpora.txt')
+f=open(file_path, 'r', errors= 'ignore')
+raw=f.read()
+raw=raw.lower()
+
 sent_tokens = nltk.sent_tokenize(raw)
 word_tokens = nltk.word_tokenize(raw)
 
@@ -261,25 +263,20 @@ def respond(sentence):
         resp = check_for_greeting(parsed)
     if not resp:
         resp = check_for_goodbye(parsed)
-    # If we just greeted the bot, we'll use a return greeting
-    # if not resp:
-    #     resp = respond(parsed)
 
-
+    # if we get through our rules, just respond using a corpora
     if not resp:
-        # If we didn't override the final sentence, try to construct a new one:
+        resp = converse_normal(sentence)
+
+    # will just say it doesn't know what's going on as an absolute last check to make sure there's a response
+    if not resp:
         if not pronoun:
             resp = random.choice(NONE_RESPONSES)
-        elif pronoun == 'I' and not verb:
-            resp = random.choice(COMMENTS_ABOUT_SELF)
-        else:
+        elif not resp:
             resp = construct_response(pronoun, noun, verb)
-
-    # If we got through all that with nothing, use a random response
-    if not resp:
-        resp = random.choice(NONE_RESPONSES)
-
-    # Check that we're not going to say anything obviously offensive
+        else:
+            resp = random.choice(NONE_RESPONSES)
+    # make sure we don't say anything obviously offensive
     filter_response(resp)
 
     return resp

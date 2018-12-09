@@ -263,7 +263,8 @@ def respond(sentence):
     # If we just greeted the bot, we'll use a return greeting
     # if not resp:
     #     resp = respond(parsed)
-
+    if not resp:
+        resp = converse_normal(sentence)
 
     if not resp:
         # If we didn't override the final sentence, try to construct a new one:
