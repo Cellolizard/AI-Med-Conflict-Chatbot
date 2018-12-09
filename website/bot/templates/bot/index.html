@@ -5,7 +5,7 @@
 {% block javascript %}
   <script>
     function scroll() {
-        var height = $('#dvTextArea')[0].scrollHeight;
+        var height = Number.MAX_SAFE_INTEGER;
         $('#dvTextArea').scrollTop(height);
     };
     $("#converse").change(function() {
@@ -34,8 +34,14 @@
           $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>" + data.bot_response +"</span>" );
           $( "#dvTextArea" ).append("<br>");
           $( "#loadingGif" ).fadeToggle();
+          scroll.call($( "#dvTextArea" ), this);
+          $( "#converse" ).prop('disabled', false);
+          $( "#converse" ).prop('placeholder', "Say something...");
+          $( "#converse" ).focus();
         },
         beforeSend: function() {
+          $( "#converse" ).prop('disabled', true);
+          $( "#converse" ).prop('placeholder', "Thinking...");
           $( "#loadingGif" ).fadeToggle();
         }
       });

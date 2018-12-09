@@ -20,7 +20,7 @@ import os.path as path
 import warnings
 warnings.filterwarnings("ignore")
 from textblob import TextBlob
-from .config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
+from .config import *
 from .interaction import findDrugInteractions
 from .rxnorm import rxNormId
 from nltk.corpus import stopwords
@@ -158,22 +158,32 @@ def construct_response(pronoun, noun, verb):
 def check_for_comment_about_bot(pronoun, noun, adjective, verb):
     # checks if the user's response is about the bot
     resp = None
+    # if pronoun == 'I':
+    #     resp = "You're talking about me."
     if pronoun == 'I' and verb == 'are':
+        print("case 1")
         resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective' : adjective })
     elif pronoun == 'I' and (noun or adjective):
         if noun:
+            # you are a funky bot
+            print("case 2")
             if random.choice((True, False)):
                 resp = random.choice(SELF_VERBS_WITH_NOUN_CAPS_PLURAL).format(**{'noun': noun.pluralize().capitalize()})
             else:
+                print("case 3")
                 resp = random.choice(SELF_VERBS_WITH_NOUN_LOWER).format(**{'noun': noun})
         else:
+            print("case 4")
             resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective': adjective})
     return resp
 
 def check_for_greeting(input):
     resp = None
+    # input_parsed = input.lower().split(" ")
+    if("whats up" in input.lower() or "what's up" in input.lower()):
+        resp = "The sky <span class='emoji'>🙄</span>"
     for word in GREETING_INPUTS:
-        if word in input.lower():
+        if " " + word + " " in input.lower():
             resp = random.choice(GREETING_RESPONSES).capitalize()
     return resp
 
@@ -187,7 +197,7 @@ def check_for_goodbye(input):
 def check_for_mention_of_drugs(input):
     resp = ""
     stopwords_drugs = stop_words;
-    stopwords_drugs.update(["currently", "today", "right", "weekday", "week", "day"]) # add more later!
+    stopwords_drugs.update(DRUGS_STOP_WORDS)
     potential_drugs = []
     for sent in input.sentences:
         for word, typ in sent.pos_tags:
@@ -200,9 +210,12 @@ def check_for_mention_of_drugs(input):
     if(len(rxnorms) < 2):
         return resp
     drugInteractionsDict = findDrugInteractions(rxnorms)
+    if(len(drugInteractionsDict) < 1):
+        return resp
+    resp = random.choice(INTERACTION_PREFIXES) + " "
     for i in drugInteractionsDict.values():
-        print(i)
-        resp += i + " "
+        # print(i)
+        resp += "<br>" + i
     return resp
 #     resp = ""
 #     drugs = []
