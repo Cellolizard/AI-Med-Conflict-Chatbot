@@ -51,8 +51,6 @@ FILTER_WORDS = set([
 GREETING_INPUTS = ("hello",
     "hi",
     "sup",
-    "what's up",
-    "whats up",
     "hey",
     "heyy",
     "greetings",
@@ -92,6 +90,45 @@ GOODBYE_INPUTS = (
     "take care",
     "peace out",
 )
+
+DRUGS_STOP_WORDS = ["currently",
+    "presently",
+    "today",
+    "right",
+    "weekday",
+    "sunday",
+    "sundays",
+    "monday",
+    "mondays",
+    "tuesday",
+    "tuesdays",
+    "wednesday",
+    "wednesdays",
+    "thursday",
+    "thursdays",
+    "friday"
+    "fridays",
+    "saturday",
+    "saturdays"
+    "month",
+    "week",
+    "year"
+    "day"]
+
+INTERACTION_PREFIXES = ("I found a few things you should know about:",
+    "Here's what I found:",
+    "Those drugs have the following interactions:",
+    )
+
+INTERACTION_PREFIXES_UNPROFESSIONAL = ("I found a few things you should know about:",
+    "Uh-oh. Thats probably a bad idea...",
+    "I guess whether or not you should take those drugs together depends on if you wish death.",
+    "Probably don't do that...",
+    "What would you do if it wasn't for me?",
+    "I took all of those drugs at the same time, and heres what I found:",
+    "You chould definitely not take those together, unless you're tryna party.",
+    "8 out of 10 doctors recommend not taking those drugs together.",
+    "That combination of drugs works great on horses, but not so great on humans.")
 
 GOODBYE_RESPONSES = ["Goodbye!", "Bye!", "Thanks for chatting!", "Take it easy!", "Take care!", "Bye bye!"]
 
