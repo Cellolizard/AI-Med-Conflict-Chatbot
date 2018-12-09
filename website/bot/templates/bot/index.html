@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block javascript %}
   <script>
     function scroll() {
@@ -31,6 +33,10 @@
         success: function (data) {
           $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>" + data.bot_response +"</span>" );
           $( "#dvTextArea" ).append("<br>");
+          $( "#loadingGif" ).fadeToggle();
+        },
+        beforeSend: function() {
+          $( "#loadingGif" ).fadeToggle();
         }
       });
       $("#converse").val("");
@@ -42,6 +48,7 @@
 {% block content %}
 <div class=" medbot-container">
     <div class="container medbot-chatbox">
+      <img id="loadingGif" src="{% static 'bot/loading-ring.gif' %}" class="loading" style="display:None">
       <div id="dvTextArea" class="chatbox-scroll">
         <strong>MedBot:</strong><span class="bot-text">Hi, I'm MedBot! Tell me your name in the text box below...</span>
         <br>

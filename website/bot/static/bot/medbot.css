@@ -91,6 +91,16 @@ main {
   position: relative;
   border-color: #8b9dc3;
 }
+
+.medbot-chatbox .loading {
+  top: 0;
+  right: 0;
+  margin: 10px;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+}
+
 .chatbox-scroll {
   height: 100%;
   overflow-y: auto;
