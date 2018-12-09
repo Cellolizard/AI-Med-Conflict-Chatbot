@@ -1,11 +1,13 @@
 # Mitchell Rudoll and Oliver Whittlef
 
-# Inspiration drawn from NLTK Eliza and https://github.com/lizadaly/brobot/blob/master/broize.py
+# Inspiration drawn from NLTK Eliza, https://github.com/lizadaly/brobot/blob/master/broize.py,
+# and https://github.com/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/blob/master/chatbot.py
 
-# IMPORTS
+# IMPORTS 
 
 from __future__ import print_function, unicode_literals
 import nltk
+from nltk.corpus import wordnet
 import numpy as np
 import random
 import string
@@ -14,6 +16,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 import io
+import os.path as path
+import warnings
+warnings.filterwarnings("ignore")
 from textblob import TextBlob
 from .config import FILTER_WORDS, GREETING_INPUTS, GREETING_RESPONSES, NONE_RESPONSES, COMMENTS_ABOUT_SELF, SELF_VERBS_WITH_ADJECTIVE, SELF_VERBS_WITH_NOUN_LOWER, SELF_VERBS_WITH_NOUN_CAPS_PLURAL, GOODBYE_INPUTS, GOODBYE_RESPONSES
 from .interaction import findDrugInteractions
@@ -21,10 +26,22 @@ from .rxnorm import rxNormId
 
 # DATA LOADING
 
-os.environ['NLTK_DATA'] = os.getcwd() + '/nltk_data'
+p = path.abspath(path.join(__file__, "../../.."))
 
-nltk.download('punkt')
-nltk.download('wordnet')
+os.environ['NLTK_DATA'] = p + '/nltk_data/'
+
+# make sure required files are downloaded, but don't print to console
+nltk.download('punkt', quiet=True)
+nltk.download('wordnet', quiet=True)
+
+module_dir = os.path.dirname(__file__)
+file_path = os.path.join(module_dir, 'corpora.txt')
+f=open(file_path, 'r', errors= 'ignore')
+raw=f.read()
+raw=raw.lower()
+
+sent_tokens = nltk.sent_tokenize(raw)
+word_tokens = nltk.word_tokenize(raw)
 
 # Dictionary of drug names used
 
@@ -253,32 +270,48 @@ def respond(sentence):
         resp = check_for_greeting(parsed)
     if not resp:
         resp = check_for_goodbye(parsed)
-    # If we just greeted the bot, we'll use a return greeting
-    # if not resp:
-    #     resp = respond(parsed)
 
+    # if we get through our rules, just respond using a corpora
     if not resp:
-        # If we didn't override the final sentence, try to construct a new one:
+        resp = converse_normal(sentence)
+
+    # will just say it doesn't know what's going on as an absolute last check to make sure there's a response
+    if not resp:
         if not pronoun:
             resp = random.choice(NONE_RESPONSES)
-        elif pronoun == 'I' and not verb:
-            resp = random.choice(COMMENTS_ABOUT_SELF)
-        else:
+        elif not resp:
             resp = construct_response(pronoun, noun, verb)
-
-    # If we got through all that with nothing, use a random response
-    if not resp:
-        resp = random.choice(NONE_RESPONSES)
-
-    # Check that we're not going to say anything obviously offensive
+        else:
+            resp = random.choice(NONE_RESPONSES)
+    # make sure we don't say anything obviously offensive
     filter_response(resp)
 
     return resp
+
+def respond_normal(sentence):
+    resp = ''
+    sent_tokens.append(sentence)
+    TfidVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
+    tfidf = TfidVec.fit_transform(sent_tokens)
+    vals = cosine_similarity(tfidf[-1], tfidf)
+    idx = vals.argsort()[0][-2]
+    flat = vals.flatten()
+    flat.sort()
+    req_tfidf = flat[-2]
+    if(req_tfidf==0):
+        resp = resp + "I apologize, but I don't understand what you're saying."
+    else:
+        resp = resp + sent_tokens[idx]
+        return resp
 
 #DRIVER
 
 def converse(sentence):
     resp = respond(sentence)
+    return resp
+
+def converse_normal(sentence):
+    resp = respond_normal(sentence)
     return resp
 
 if __name__ == '__main__':
