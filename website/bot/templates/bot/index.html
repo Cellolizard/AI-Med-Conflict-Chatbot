@@ -8,6 +8,7 @@
   <script>
     $( document ).ready(function() {
       $("#nameModal").modal('show');
+      $('#nameInputBox').focus();
     });
     $('#nameModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus');
@@ -24,6 +25,7 @@
       $( "#dvTextArea" ).append("<br>");
       if(sessionStorage.getItem('name') != null) {
         $("#nameModal").modal('hide');
+        $("#converse").focus();
       }
     });
     $("#nameInputBox").change(function() {

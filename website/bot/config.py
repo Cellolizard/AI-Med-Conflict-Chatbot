@@ -119,8 +119,10 @@ DRUGS_STOP_WORDS = ["currently",
     "saturdays"
     "month",
     "week",
-    "year"
-    "day"]
+    "year",
+    "day",
+    "together",
+    "time"]
 
 ROBO_REFLECTIONS_PERSONAL_ASK = (
     "how are you",

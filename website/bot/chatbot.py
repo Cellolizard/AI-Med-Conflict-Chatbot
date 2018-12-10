@@ -56,7 +56,7 @@ stop_words = set(stopwords.words('english'))
 # Dictionary of drug names used
 
 # dictionary of form RxNormId : {UserName : OfficialName}
-user_drug_names = {}
+client_drug_names = {}
 
 remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 
@@ -73,11 +73,11 @@ class NoNoWordsException(Exception):
 # FUNCTIONS
 
 def add_to_client_drug_names(rxNormId, dictPair):
-    user_drug_names[rxNormId] = dictPair
+    client_drug_names[rxNormId] = dictPair
     return True
 
 def get_from_client_drug_names(rxNormId):
-    return user_drug_names[rxNormId]
+    return client_drug_names[rxNormId]
 
 def starts_with_vowel(word):
     # check for 'a' versus 'an'
@@ -248,46 +248,30 @@ def check_for_self_reflection(input):
     return resp
 
 def check_for_mention_of_drugs(input):
+    # populates client_drug_names based on user input, then gets all of the interactions
+    # and concatenates them together into a response
     resp = ""
     stopwords_drugs = stop_words;
     stopwords_drugs.update(DRUGS_STOP_WORDS)
-    potential_drugs = []
+    client_drug_names.clear()
     for sent in input.sentences:
+        print(sent)
         for word, typ in sent.pos_tags:
-            if typ in ("RB", "CC", "NN", "JJ") and word not in stopwords_drugs:
-                potential_drugs.append(word)
-    if(len(potential_drugs) < 2):
+            print("{0}:{1} ".format(word, typ), end="", flush=True)
+            if typ in ("RB", "CC", "NN", "NNP", "JJ") and word not in stopwords_drugs:
+                id = rxNormId(word)
+                if id:
+                    add_to_client_drug_names(id, { "foo" : word })
+    print(client_drug_names)
+    if(len(client_drug_names) < 2):
         return resp
-    rxnorms = map(rxNormId, potential_drugs)
-    rxnorms = list(filter(None, rxnorms))
-    if(len(rxnorms) < 2):
-        return resp
-    drugInteractionsDict = findDrugInteractions(rxnorms)
+    drugInteractionsDict = findDrugInteractions(client_drug_names.keys())
     if(len(drugInteractionsDict) < 1):
         return resp
     resp = random.choice(INTERACTION_PREFIXES) + " "
     for i in drugInteractionsDict.values():
-        # print(i)
         resp += "<br>" + i
     return resp
-#     resp = ""
-#     drugs = []
-#     if input.find("are") >= 0:
-#         drugs = [str(d).strip() for d in input[input.index("are"):].split()]
-#     elif input.find("taking") >= 0:
-#         drugs = [str(d).strip() for d in input[input.index("taking"):].split()]
-#     elif input.find("check") >= 0:
-#         drugs = [str(d).strip() for d in input[input.index("check"):].split()]
-#     elif input.find("thank") >= 0:
-#         drugs = [str(d).strip() for d in input[:input.index("thank")].split()]
-#     if(len(drugs) > 0):
-#         drugInteractionsDict = findDrugInteractions(map(rxNormId, drugs))
-#         for i in drugInteractionsDict.values():
-#             resp += i + " "
-#         if not resp:
-#             resp = "I couldn't find anything. Would you like me to ask Siri?"
-#     return resp
-#
 
 def find_candidate_parts_of_speech(parsed):
     # finds best pronoun, noun, adjective, and verb to match input
