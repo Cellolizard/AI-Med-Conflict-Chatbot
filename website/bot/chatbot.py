@@ -185,6 +185,7 @@ def check_for_comment_about_bot(pronoun, noun, adjective, verb):
     return resp
 
 def check_for_greeting(input):
+    # checks for if the user has greeted the bot
     resp = ""
     input_parsed = input.lower().split(" ")
     if("whats up" in input.lower() or "what's up" in input.lower()):
@@ -203,6 +204,7 @@ def check_for_greeting(input):
     return resp
 
 def check_for_goodbye(input):
+    # checks for if the user has bid the bot goodbye
     resp = ""
     input_parsed = input.lower().split(" ")
     for word in GOODBYE_INPUTS:
@@ -215,6 +217,14 @@ def check_for_goodbye(input):
             break
         if word in input.lower():
             resp = random.choice(GOODBYE_RESPONSES).capitalize()
+    return resp
+
+def check_for_request_for_self_reflection(input):
+    resp = ""
+    return resp
+
+def check_for_self_reflection(input):
+    resp = ""
     return resp
 
 def check_for_mention_of_drugs(input):
@@ -308,6 +318,10 @@ def respond(sentence):
         resp = check_for_greeting(parsed)
     if not resp:
         resp = check_for_goodbye(parsed)
+    if not resp:
+        resp = check_for_self_reflection(parsed)
+    if not resp:
+        resp = check_for_request_for_self_reflection(parsed)
     if not resp:
         resp = check_for_comment_about_bot(pronoun, noun, adjective, verb)
 
