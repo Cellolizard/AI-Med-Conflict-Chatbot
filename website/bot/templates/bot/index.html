@@ -10,14 +10,22 @@
     $('#nameModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus');
     });
+    $('#nameModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+    });
     $("#nameInputSubmit").click(function () {
       if($("#nameInputBox").val() == "")
         return;
       sessionStorage.setItem('name', $("#nameInputBox").val());
+      $( "#dvTextArea" ).append( "<strong>MedBot: </strong><span class='bot-text'>Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
+      $( "#dvTextArea" ).append("<br>");
       if(sessionStorage.getItem('name') != null) {
         $("#nameModal").modal('hide');
-        console.log(sessionStorage.getItem('name'));
       }
+    });
+    $("#nameInputBox").change(function() {
+      $("#nameInputSubmit").click();
     });
     function scroll() {
         var height = Number.MAX_SAFE_INTEGER;
@@ -92,10 +100,9 @@
 
       <img id="loadingGif" src="{% static 'bot/loading-ring.gif' %}" class="loading" style="display:None">
       <div id="dvTextArea" class="chatbox-scroll">
-        <strong>MedBot: </strong><span class="bot-text">Hi, I'm MedBot! Tell me your name in the text box below...</span>
-        <br>
+
       </div>
-      <!-- <input id="converse" type="text" class="medbot-input" placeholder="Say something..."> -->
+
       <div class="row">
         <div class="col-lg-12">
       <div class="input-group mb-3">
