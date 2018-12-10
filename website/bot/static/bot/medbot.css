@@ -141,7 +141,7 @@ main {
   -webkit-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
   -moz-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
   box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
-
+}
 .user-text {
   padding: 5px;
 }
@@ -174,7 +174,6 @@ main {
     height: 0;
     display: none;
 }
-
 ::-webkit-scrollbar-corner {
     background-color: transparent;
 }
