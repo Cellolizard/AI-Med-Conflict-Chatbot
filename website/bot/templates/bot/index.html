@@ -6,8 +6,20 @@
   <script>
     $( document ).ready(function() {
       $("#nameModal").show();
-      //$("#nameModal").modal('hide').on("#nameInputSubmit");
+      $('#nameModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+      })
     });
+    submitModalClicked = false;
+    document.getElementById('nameInputSubmit').onclick = function () {
+        submitModalClicked = true;
+    };
+    // if (submitModalClicked) {
+    //   sessionStorage.setItem('name', $("#nameInputBox").val();
+    //   if(sessionStorage.getItem('name') != null) {
+    //       $("#nameModal").modal('hide');
+    //   }
+    // }
     function scroll() {
         var height = Number.MAX_SAFE_INTEGER;
         $('#dvTextArea').scrollTop(height);
@@ -61,7 +73,9 @@
 
       <div id="nameModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
+          <div style="-webkit-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
+              -moz-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
+              box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);" class="modal-content">
             <div class="modal-header">
               <h5 style="text-align: center" class="modal-title">Please type your name below: </h5>
             </div>
