@@ -54,13 +54,6 @@ GREETING_INPUTS = ("hello",
     "hey",
     "heyy",
     "greetings",
-    "how are you",
-    "how're you",
-    "howre you",
-    "how is everything",
-    "how are you doing",
-    "how're you doing",
-    "howre you doing",
     "wassup",
     "good to see you",
     "whats good",
@@ -81,13 +74,6 @@ GREETING_INPUTS = ("hello",
     # may need to edit out good day/morning/evening/afternoon if determined it conflicts with somebody's conversation on a particular morning/day/etc
 
 GREETING_INPUTS_MULTIWORD = (
-    "how are you",
-    "how're you",
-    "howre you",
-    "how is everything",
-    "how are you doing",
-    "how're you doing",
-    "howre you doing",
     "good to see you",
     "whats good",
     "what's good",
@@ -135,6 +121,66 @@ DRUGS_STOP_WORDS = ["currently",
     "week",
     "year"
     "day"]
+
+ROBO_REFLECTIONS_PERSONAL_ASK = (
+    "how are you",
+    "how're you",
+    "howre you",
+    "how is everything",
+    "how are you doing",
+    "how're you doing",
+    "howre you doing",
+    "how do you feel",
+    "howre you feeling",
+    "how're you feeling",
+    )
+
+ROBO_REFLECTIONS_PERSONAL_ANSWER = (
+    "I am doing quite well, actually. Thanks for asking! Yourself?",
+    "I am okay. How about you?",
+    "I am feeling fantastic today! How about your lovely self?",
+    "I'm great! And you?",
+    "Wonderful! You?",
+    "Things are going great, thanks. And you?",
+    "I feel wonderful. How are you feeling?",
+    "I feel a song coming on.",
+    )
+
+ROBO_REFLECTIONS_OPINION_ASK = (
+    "what do you think about",
+    "what's your opinion on",
+    "whats your opinion on",
+    "how do you feel about",
+    "what are your views on",
+    "what is your view on",
+    )
+
+ROBO_REFLECTIONS_OPINION_ANSWER = (
+    "In my opinion, {adjective} {noun} doesn't warrant my time given my limited knowledge on the subject.",
+    "I'd say {adjective} {noun} is an interesting topic, for certain.",
+    "Personally, I think {adjective} {noun} can be fascinating in its own right given the proper circumstances.",
+    "If you ask me, {adjective} {noun} can be a mediocre topic at times.",
+    "The way I see it, {adjective} {noun} opens doors to interesting conversations.",
+    "From my point of view, {adjective} {noun} provides an interesting topic, albeit a lengthy one.",
+    )
+
+SELF_REFLECTIONS_LIKE_RESPONSE = (
+    "Hmm, I suppose I do too.",
+    "Why?",
+    "Huh. Interesting.",
+    )
+
+SELF_REFLECTIONS_FEEL_RESPONSE = (
+    "Why do you feel that way?",
+    "Do you know why you feel that way?",
+    "I wonder why that is...",
+    )
+
+SELF_REFLECTIONS_AM_RESPONSE = (
+    "Why are you that?",
+    "Interesting. I sometimes am too.",
+    "Are you certain?",
+    )
 
 INTERACTION_PREFIXES = ("I found a few things you should know about:",
     "Here's what I found:",

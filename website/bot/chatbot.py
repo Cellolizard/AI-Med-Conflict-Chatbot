@@ -219,12 +219,37 @@ def check_for_goodbye(input):
             resp = random.choice(GOODBYE_RESPONSES).capitalize()
     return resp
 
-def check_for_request_for_self_reflection(input):
+def check_for_request_for_self_reflection(input, pronoun, noun, adjective, verb):
+    # checks for if the user has asked things of the nature 'How are you doing?' or 'How do you feel?'
     resp = ""
+    adj = adjective
+    n = noun
+    if adj == None:
+        adj = ""
+    if n == None:
+        n = "things"
+    for word in ROBO_REFLECTIONS_OPINION_ASK:
+        if resp != "":
+            break
+        if word in input.lower():
+            resp = random.choice(ROBO_REFLECTIONS_OPINION_ANSWER).format(**{'adjective': adj, 'noun': n})
+    for word in ROBO_REFLECTIONS_PERSONAL_ASK:
+        if resp != "":
+            break
+        if word in input.lower():
+            resp = random.choice(ROBO_REFLECTIONS_PERSONAL_ANSWER)
     return resp
 
 def check_for_self_reflection(input):
+    # checks for if the user has made comments about themselves of the nature 'I feel ____' or 'I am ____'
     resp = ""
+    if "i like" in input.lower():
+        resp = random.choice(SELF_REFLECTIONS_LIKE_RESPONSE)
+    if "i feel" in input.lower():
+        resp = random.choice(SELF_REFLECTIONS_FEEL_RESPONSE)
+    if "i am" in input.lower():
+        resp = random.choice(SELF_REFLECTIONS_AM_RESPONSE)
+
     return resp
 
 def check_for_mention_of_drugs(input):
@@ -321,13 +346,15 @@ def respond(sentence):
     if not resp:
         resp = check_for_self_reflection(parsed)
     if not resp:
-        resp = check_for_request_for_self_reflection(parsed)
+        resp = check_for_request_for_self_reflection(parsed, pronoun, noun, adjective, verb)
     if not resp:
         resp = check_for_comment_about_bot(pronoun, noun, adjective, verb)
 
     # if we get through our rules, just respond using a corpora
     if not resp:
         resp = converse_normal(sentence)
+        if resp != None:
+            resp = resp.capitalize()
 
     # will just say it doesn't know what's going on as an absolute last check to make sure there's a response
     if not resp:
@@ -362,7 +389,7 @@ def respond_normal(sentence):
 
 def converse(sentence):
     resp = respond(sentence)
-    return resp.capitalize()
+    return resp
 
 def converse_normal(sentence):
     resp = respond_normal(sentence)
