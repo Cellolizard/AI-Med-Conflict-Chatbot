@@ -1,3 +1,5 @@
+# © Copyright Mitchell Rudoll and Oliver Whittlef
+
 import requests
 import xml.etree.ElementTree as ET
 

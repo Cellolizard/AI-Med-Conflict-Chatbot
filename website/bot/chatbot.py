@@ -1,7 +1,13 @@
-# Mitchell Rudoll and Oliver Whittlef
+# © Copyright Mitchell Rudoll and Oliver Whittlef
 
 # Inspiration drawn from NLTK Eliza, https://github.com/lizadaly/brobot/blob/master/broize.py,
 # and https://github.com/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/blob/master/chatbot.py
+
+# This product uses publicly available data from the U.S. National Library of Medicine (NLM), National
+# Institutes of Health, Department of Health and Human Services; NLM is not responsible for the product
+# and does not endorse or recommend this or any other product.
+
+# This uses the abovementioned data through the use of API calls in interaction.py and rxnorm.py
 
 # IMPORTS
 
@@ -52,6 +58,10 @@ stop_words = set(stopwords.words('english'))
 # dictionary of form RxNormId : {UserName : OfficialName}
 user_drug_names = {}
 
+remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
+
+lemmer = nltk.stem.WordNetLemmatizer()
+
 # API CALLS
 
 # CLASSES
@@ -62,8 +72,6 @@ class NoNoWordsException(Exception):
 1
 # FUNCTIONS
 
-remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
-
 def add_to_client_drug_names(rxNormId, dictPair):
     user_drug_names[rxNormId] = dictPair
     return True
@@ -72,12 +80,11 @@ def get_from_client_drug_names(rxNormId):
     return user_drug_names[rxNormId]
 
 def starts_with_vowel(word):
-    """Check for pronoun compability -- 'a' vs. 'an'"""
+    # check for 'a' versus 'an'
     return True if word[0] in 'aeiou' else False
 
 def find_pronoun(sent):
-    """Given a sentence, find a preferred pronoun to respond with. Returns None if no candidate
-    pronoun is found in the input"""
+    # find's preferred pronoun to respond with
     pronoun = None
 
     for word, part_of_speech in sent.pos_tags:
@@ -87,7 +94,7 @@ def find_pronoun(sent):
         elif part_of_speech == 'PRP' and word.lower() == 'your':
             pronoun = 'my'
         elif part_of_speech == 'PRP' and word == 'I':
-            # If the user mentioned themselves, then they will definitely be the pronoun
+            # If the user mentioned themselves
             pronoun = 'You'
     return pronoun
 
@@ -104,7 +111,7 @@ def find_verb(sent):
 
 
 def find_noun(sent):
-    """Given a sentence, find the best candidate noun."""
+    # attempt to find the best noun in the sentence
     noun = None
 
     if not noun:
@@ -116,7 +123,7 @@ def find_noun(sent):
     return noun
 
 def find_adjective(sent):
-    """Given a sentence, find the best candidate adjective."""
+    # attempt to find the best adjective in the sentence
     adj = None
     for w, p in sent.pos_tags:
         if p == 'JJ':  # This is an adjective
@@ -147,7 +154,7 @@ def construct_response(pronoun, noun, verb):
         resp.append(pronoun)
     if verb:
         verb_word = verb[0]
-        if verb_word in ('be', 'am', 'is', "'m"):  # This would be an excellent place to use lemmas!
+        if verb_word in ('be', 'am', 'is', "'m"):
             resp.append(verb_word)
     if noun:
         pronoun = "an" if starts_with_vowel(noun) else "a"
@@ -251,18 +258,10 @@ def check_for_mention_of_drugs(input):
 #             resp = "I couldn't find anything. Would you like me to ask Siri?"
 #     return resp
 #
-# def check_for_comment_about_drugs(pronoun, noun, adjective):
-#     """Check if the user's input was about drugs, in which case try to fashion a response
-#     that feels right based on their input. Returns the new best sentence, or None."""
-#     resp = None
-#     if noun and noun.lower() in ["drugs", "medicine", "medication"]:
-#         names = ('tylenol', 'ibuprofen', 'viagra')
-#         resp = str(findDrugInteractions(map(rxNormId, names)))
-#     return resp
 
 def find_candidate_parts_of_speech(parsed):
-    """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
-    Returns a tuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
+    # finds best pronoun, noun, adjective, and verb to match input
+    # returns tuple of above, with None in the place if no match
     pronoun = None
     noun = None
     adjective = None
@@ -275,7 +274,7 @@ def find_candidate_parts_of_speech(parsed):
     return pronoun, noun, adjective, verb
 
 def filter_response(resp):
-    """Don't allow any words to match our filter list"""
+    # try to prevent blacklist words from corpora responses
     resp = resp
     tokenized = resp.split(' ')
     for word in tokenized:
@@ -285,23 +284,14 @@ def filter_response(resp):
                 resp = "Hmm, I almost said something I'm not supposed to."
     return resp
 
-
-lemmer = nltk.stem.WordNetLemmatizer()
-
 def LemTokens(tokens):
     return [lemmer.lemmatize(token) for token in tokens]
 
 def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
-def greeting(sentence):
-    # TODO: change split to .words
-    for word in sentence.words:
-        if word.lower() in GREETING_INPUTS:
-            return random.choice(GREETING_RESPONSES)
-
 def respond(sentence):
-    """Parse the user's inbound sentence and find candidate terms that make up a best-fit response"""
+    # Parse the user's inbound sentence to find best parts of speech to match
     cleaned = preprocess_text(sentence)
     parsed = TextBlob(cleaned)
 
@@ -310,15 +300,10 @@ def respond(sentence):
     # in one sentence
     pronoun, noun, adjective, verb = find_candidate_parts_of_speech(parsed)
 
-    # If we said something about the bot and used some kind of direct noun, construct the
-    # sentence around that, discarding the other candidates
-
     # resp = check_for_comment_about_bot(pronoun, noun, adjective)
     resp = None
     if not resp:
         resp = check_for_mention_of_drugs(parsed)
-    # if not resp:
-    #     resp = check_for_comment_about_drugs(pronoun, noun, adjective)
     if not resp:
         resp = check_for_greeting(parsed)
     if not resp:
@@ -370,7 +355,8 @@ def converse_normal(sentence):
     return resp
 
 if __name__ == '__main__':
-    print("Bot: Hello, my name is Dr. Web MD. Please feel free to ask me any questions you may have regarding the medicines you're taking.")
+    # main driver if we run from the console. Very primitive version compared to UI web implementation.
+    print("Bot: Welcome, user! What can I help you with today?")
     while(True):
         resp = input('> ')
         print(converse(resp))
