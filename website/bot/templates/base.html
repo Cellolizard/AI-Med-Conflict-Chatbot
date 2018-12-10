@@ -2,12 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
+
     <title>{% block title %}MedBot{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="{% static 'bot/medbot.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'bot/MedBot_transparent_background.png' %}"/>
     {% block stylesheet %}{% endblock %}
+
   </head>
   <body>
     <main>
@@ -17,14 +19,16 @@
         </div>
         <h1>MedBot</h1>
         <div class = "medbot-header-disclaimer">
-          <button id="disclaimer" class="btn btn-outline-secondary medbot-submit" type="button">
-          <i class="fas fa-exclamation-circle"></i> Disclaimer
-          </button>
+          <a id="disclaimer" href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover" data-placement="bottom" class="btn btn-outline-secondary medbot-submit">
+            <i class="fa fa-exclamation-circle"></i> Disclaimer
+          </a>
         </div>
       </div>
       <div class="medbot-main">
+
         {% block content %}
         {% endblock %}
+
       </div>
     </main>
     <footer class="medbot-footer">
@@ -58,8 +62,13 @@
       <!-- Copyright -->
     </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="{% static 'bot/medbot.js' %}"></script>
-    {% block javascript %}{% endblock %}
+
+    {% block javascript %}
+    {% endblock %}
+
   </body>
 </html>

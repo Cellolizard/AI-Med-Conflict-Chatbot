@@ -36,11 +36,13 @@
           $( "#loadingGif" ).fadeToggle();
           scroll.call($( "#dvTextArea" ), this);
           $( "#converse" ).prop('disabled', false);
+          $( "#submit" ).prop('disabled', false);
           $( "#converse" ).prop('placeholder', "Say something...");
           $( "#converse" ).focus();
         },
         beforeSend: function() {
           $( "#converse" ).prop('disabled', true);
+          $( "#submit" ).prop('disabled', true);
           $( "#converse" ).prop('placeholder', "Thinking...");
           $( "#loadingGif" ).fadeToggle();
         }
@@ -52,7 +54,7 @@
 {% endblock %}
 
 {% block content %}
-<div class=" medbot-container">
+<div class="medbot-container">
     <div class="container medbot-chatbox">
       <img id="loadingGif" src="{% static 'bot/loading-ring.gif' %}" class="loading" style="display:None">
       <div id="dvTextArea" class="chatbox-scroll">

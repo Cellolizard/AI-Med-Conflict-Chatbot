@@ -120,9 +120,7 @@ main {
 
 .medbot-input {
   width: 100%;
-  /* line-height: 2.2em; */
   border-radius: 7px;
-  /* border: 3px solid #cae7f9; */
 }
 
 .medbot-submit {
@@ -147,7 +145,6 @@ main {
     height: 18px;
 }
 ::-webkit-scrollbar-track {
-    /* background: #cae7f9; */
 }
 ::-webkit-scrollbar-thumb{
     height: 15px;
