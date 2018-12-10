@@ -7,19 +7,18 @@
     $( document ).ready(function() {
       $("#nameModal").show();
       $('#nameModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus')
-      })
+        $('#myInput').trigger('focus');
+      });
     });
-    submitModalClicked = false;
-    document.getElementById('nameInputSubmit').onclick = function () {
-        submitModalClicked = true;
-    };
-    // if (submitModalClicked) {
+    // $("#nameInputSubmit").click(function () {
+    //   if($("#nameInputBox").val() == "")
+    //     return;
     //   sessionStorage.setItem('name', $("#nameInputBox").val();
     //   if(sessionStorage.getItem('name') != null) {
-    //       $("#nameModal").modal('hide');
+    //     $("#nameModal").modal('hide');
+    //     console.log(sessionStorage.getItem('name'));
     //   }
-    // }
+    // });
     function scroll() {
         var height = Number.MAX_SAFE_INTEGER;
         $('#dvTextArea').scrollTop(height);
