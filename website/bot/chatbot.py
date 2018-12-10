@@ -157,7 +157,7 @@ def construct_response(pronoun, noun, verb):
 
 def check_for_comment_about_bot(pronoun, noun, adjective, verb):
     # checks if the user's response is about the bot
-    resp = None
+    resp = ""
     # if pronoun == 'I':
     #     resp = "You're talking about me."
     if pronoun == 'I' and verb == 'are':
@@ -178,18 +178,34 @@ def check_for_comment_about_bot(pronoun, noun, adjective, verb):
     return resp
 
 def check_for_greeting(input):
-    resp = None
-    # input_parsed = input.lower().split(" ")
+    resp = ""
+    input_parsed = input.lower().split(" ")
     if("whats up" in input.lower() or "what's up" in input.lower()):
         resp = "The sky <span class='emoji'>🙄</span>"
+    elif resp == "":
+        for word in GREETING_INPUTS_MULTIWORD:
+            if resp != "":
+                break
+            if word in input.lower():
+                resp = random.choice(GREETING_RESPONSES).capitalize()
     for word in GREETING_INPUTS:
-        if " " + word + " " in input.lower():
+        if resp != "":
+            break
+        if word in input_parsed:
             resp = random.choice(GREETING_RESPONSES).capitalize()
     return resp
 
 def check_for_goodbye(input):
-    resp = None
+    resp = ""
+    input_parsed = input.lower().split(" ")
     for word in GOODBYE_INPUTS:
+        if resp != "":
+            break
+        if word in input_parsed:
+            resp = random.choice(GOODBYE_RESPONSES).capitalize()
+    for word in GOODBYE_INPUTS:
+        if resp != "":
+            break
         if word in input.lower():
             resp = random.choice(GOODBYE_RESPONSES).capitalize()
     return resp
@@ -260,11 +276,15 @@ def find_candidate_parts_of_speech(parsed):
 
 def filter_response(resp):
     """Don't allow any words to match our filter list"""
+    resp = resp
     tokenized = resp.split(' ')
     for word in tokenized:
         for s in FILTER_WORDS:
-            if word.lower().startswith(s):
+            if s in word.lower():
                 raise NoNoWordsException()
+                resp = "Hmm, I almost said something I'm not supposed to."
+    return resp
+
 
 lemmer = nltk.stem.WordNetLemmatizer()
 
@@ -319,7 +339,7 @@ def respond(sentence):
         else:
             resp = random.choice(NONE_RESPONSES)
     # make sure we don't say anything obviously offensive
-    filter_response(resp)
+    resp = filter_response(resp)
 
     return resp
 
@@ -347,7 +367,7 @@ def converse(sentence):
 
 def converse_normal(sentence):
     resp = respond_normal(sentence)
-    return resp.capitalize()
+    return resp
 
 if __name__ == '__main__':
     print("Bot: Hello, my name is Dr. Web MD. Please feel free to ask me any questions you may have regarding the medicines you're taking.")

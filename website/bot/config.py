@@ -80,6 +80,27 @@ GREETING_INPUTS = ("hello",
     "good day",)
     # may need to edit out good day/morning/evening/afternoon if determined it conflicts with somebody's conversation on a particular morning/day/etc
 
+GREETING_INPUTS_MULTIWORD = (
+    "how are you",
+    "how're you",
+    "howre you",
+    "how is everything",
+    "how are you doing",
+    "how're you doing",
+    "howre you doing",
+    "good to see you",
+    "whats good",
+    "what's good",
+    "whats crackalackin",
+    "long time no see",
+    "how goes it",
+    "hows it going",
+    "how's it going",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "good day",)
+
 GOODBYE_INPUTS = (
     "bye",
     "goodbye",

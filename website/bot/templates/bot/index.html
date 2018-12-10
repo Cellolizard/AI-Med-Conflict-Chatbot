@@ -4,12 +4,12 @@
 
 {% block javascript %}
   <script>
-    $( document ).ready(function() {
-      $("#nameModal").show();
-      $('#nameModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus');
-      });
-    });
+    // $( document ).ready(function() {
+    //   $("#nameModal").show();
+    //   $('#nameModal').on('shown.bs.modal', function () {
+    //     $('#myInput').trigger('focus');
+    //   });
+    // });
     // $("#nameInputSubmit").click(function () {
     //   if($("#nameInputBox").val() == "")
     //     return;
@@ -31,12 +31,12 @@
         return;
       if(sessionStorage.getItem('name') == null) {
         sessionStorage.setItem('name', $("#converse").val());
-        $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
+        $( "#dvTextArea" ).append( "<strong>MedBot: </strong><span class='bot-text'>Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
         $( "#dvTextArea" ).append("<br>");
         $("#converse").val("");
         return;
       }
-      $( "#dvTextArea" ).append( "<strong> " + sessionStorage.getItem('name') +":</strong><span class='user-text'>" + $("#converse").val() +"</span>" );
+      $( "#dvTextArea" ).append( "<strong> " + sessionStorage.getItem('name') + ": </strong><span class='user-text'>" + $("#converse").val() +"</span>" );
       $( "#dvTextArea" ).append("<br>");
       user_response = $("#converse").val();
       $.ajax({
@@ -46,7 +46,7 @@
         },
         dataType: 'json',
         success: function (data) {
-          $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>" + data.bot_response +"</span>" );
+          $( "#dvTextArea" ).append( "<strong>MedBot: </strong><span class='bot-text'>" + data.bot_response +"</span>" );
           $( "#dvTextArea" ).append("<br>");
           $( "#loadingGif" ).fadeToggle();
           scroll.call($( "#dvTextArea" ), this);
