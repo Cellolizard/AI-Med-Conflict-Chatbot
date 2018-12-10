@@ -1,4 +1,4 @@
-# © Copyright Mitchell Rudoll and Oliver Whittlef
+# © Copyright 2018 Mitchell Rudoll and Oliver Whittlef
 
 # Inspiration drawn from NLTK Eliza, https://github.com/lizadaly/brobot/blob/master/broize.py,
 # and https://github.com/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/blob/master/chatbot.py
