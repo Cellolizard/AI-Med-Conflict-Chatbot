@@ -201,9 +201,19 @@ INTERACTION_PREFIXES_UNPROFESSIONAL = ("I found a few things you should know abo
     "8 out of 10 doctors recommend not taking those drugs together.",
     "That combination of drugs works great on horses, but not so great on humans.")
 
-GOODBYE_RESPONSES = ["Goodbye!", "Bye!", "Thanks for chatting!", "Take it easy!", "Take care!", "Bye bye!"]
+GOODBYE_RESPONSES = ["Goodbye!",
+    "Bye!",
+    "Thanks for chatting!",
+    "Take it easy!",
+    "Take care!",
+    "Bye bye!"]
 
-GREETING_RESPONSES = ["hi there!", "hello", "Greetings!", "How are you doing?", "How's it going?", "Good day, how are you?"]
+GREETING_RESPONSES = ["Hi there!",
+    "Hello",
+    "Greetings!",
+    "How are you doing?",
+    "How's it going?",
+    "Good day, how are you?"]
 
 NONE_RESPONSES = [
     "I am unsure of what you mean.",
