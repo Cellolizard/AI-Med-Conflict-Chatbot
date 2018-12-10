@@ -153,6 +153,8 @@ ROBO_REFLECTIONS_OPINION_ASK = (
     "how do you feel about",
     "what are your views on",
     "what is your view on",
+    "do you like",
+    "do you fancy",
     )
 
 ROBO_REFLECTIONS_OPINION_ANSWER = (

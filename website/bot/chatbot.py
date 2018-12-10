@@ -168,19 +168,14 @@ def check_for_comment_about_bot(pronoun, noun, adjective, verb):
     # if pronoun == 'I':
     #     resp = "You're talking about me."
     if pronoun == 'I' and verb == 'are':
-        print("case 1")
         resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective' : adjective })
     elif pronoun == 'I' and (noun or adjective):
         if noun:
-            # you are a funky bot
-            print("case 2")
             if random.choice((True, False)):
                 resp = random.choice(SELF_VERBS_WITH_NOUN_CAPS_PLURAL).format(**{'noun': noun.pluralize().capitalize()})
             else:
-                print("case 3")
                 resp = random.choice(SELF_VERBS_WITH_NOUN_LOWER).format(**{'noun': noun})
         else:
-            print("case 4")
             resp = random.choice(SELF_VERBS_WITH_ADJECTIVE).format(**{'adjective': adjective})
     return resp
 
@@ -335,7 +330,6 @@ def respond(sentence):
     # in one sentence
     pronoun, noun, adjective, verb = find_candidate_parts_of_speech(parsed)
 
-    # resp = check_for_comment_about_bot(pronoun, noun, adjective)
     resp = None
     if not resp:
         resp = check_for_mention_of_drugs(parsed)
