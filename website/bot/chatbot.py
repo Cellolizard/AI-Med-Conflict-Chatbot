@@ -310,7 +310,6 @@ def filter_response(resp):
     for word in tokenized:
         for s in FILTER_WORDS:
             if s in word.lower():
-                raise NoNoWordsException()
                 resp = "Hmm, I almost said something I'm not supposed to."
     return resp
 
