@@ -4,6 +4,21 @@
 
 {% block javascript %}
   <script>
+    // $( document ).ready(function() {
+    //   $("#nameModal").show();
+    //   $('#nameModal').on('shown.bs.modal', function () {
+    //     $('#myInput').trigger('focus');
+    //   });
+    // });
+    // $("#nameInputSubmit").click(function () {
+    //   if($("#nameInputBox").val() == "")
+    //     return;
+    //   sessionStorage.setItem('name', $("#nameInputBox").val();
+    //   if(sessionStorage.getItem('name') != null) {
+    //     $("#nameModal").modal('hide');
+    //     console.log(sessionStorage.getItem('name'));
+    //   }
+    // });
     function scroll() {
         var height = Number.MAX_SAFE_INTEGER;
         $('#dvTextArea').scrollTop(height);
@@ -16,12 +31,12 @@
         return;
       if(sessionStorage.getItem('name') == null) {
         sessionStorage.setItem('name', $("#converse").val());
-        $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
+        $( "#dvTextArea" ).append( "<strong>MedBot: </strong><span class='bot-text'>Welcome, "+ sessionStorage.getItem('name') +"! What can I help you with today?</span>" );
         $( "#dvTextArea" ).append("<br>");
         $("#converse").val("");
         return;
       }
-      $( "#dvTextArea" ).append( "<strong> " + sessionStorage.getItem('name') +":</strong><span class='user-text'>" + $("#converse").val() +"</span>" );
+      $( "#dvTextArea" ).append( "<strong> " + sessionStorage.getItem('name') + ": </strong><span class='user-text'>" + $("#converse").val() +"</span>" );
       $( "#dvTextArea" ).append("<br>");
       user_response = $("#converse").val();
       $.ajax({
@@ -31,7 +46,7 @@
         },
         dataType: 'json',
         success: function (data) {
-          $( "#dvTextArea" ).append( "<strong>MedBot:</strong><span class='bot-text'>" + data.bot_response +"</span>" );
+          $( "#dvTextArea" ).append( "<strong>MedBot: </strong><span class='bot-text'>" + data.bot_response +"</span>" );
           $( "#dvTextArea" ).append("<br>");
           $( "#loadingGif" ).fadeToggle();
           scroll.call($( "#dvTextArea" ), this);
@@ -56,9 +71,28 @@
 {% block content %}
 <div class="medbot-container">
     <div class="container medbot-chatbox">
+
+      <div id="nameModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div style="-webkit-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
+              -moz-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
+              box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26); background: #f7f7f7;" class="modal-content">
+            <div class="modal-header">
+              <h5 style="text-align: center" class="modal-title">Please type your name below: </h5>
+            </div>
+            <div class="modal-body">
+              <input id="nameInputBox" type="text" class="form-control medbot-input" placeholder="ex. 'MedBot'">
+            </div>
+            <div class="modal-footer">
+              <button id="nameInputSubmit" type="button" class="btn btn-outline-secondary medbot-submit-modal">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <img id="loadingGif" src="{% static 'bot/loading-ring.gif' %}" class="loading" style="display:None">
       <div id="dvTextArea" class="chatbox-scroll">
-        <strong>MedBot:</strong><span class="bot-text">Hi, I'm MedBot! Tell me your name in the text box below...</span>
+        <strong>MedBot: </strong><span class="bot-text">Hi, I'm MedBot! Tell me your name in the text box below...</span>
         <br>
       </div>
       <!-- <input id="converse" type="text" class="medbot-input" placeholder="Say something..."> -->

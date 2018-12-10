@@ -52,6 +52,7 @@ main {
   position: absolute;
   right: 0;
   margin-right: 25px;
+  background: #f7f7f7;
 }
 
 .medbot-footer {
@@ -129,6 +130,17 @@ main {
   color: #6C757D;
   background-color: #fff;
 }
+
+.medbot-submit-modal {
+  border-color: rgb(206, 212, 218);
+  color: #6C757D;
+  background-color: #fff;
+}
+
+.medbot-name-modal {
+  -webkit-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
+  -moz-box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
+  box-shadow: 0px 0px 116px 15px rgba(0,0,0,0.26);
 
 .user-text {
   padding: 5px;
