@@ -4,21 +4,21 @@
 
 {% block javascript %}
   <script>
-    // $( document ).ready(function() {
-    //   $("#nameModal").show();
-    //   $('#nameModal').on('shown.bs.modal', function () {
-    //     $('#myInput').trigger('focus');
-    //   });
-    // });
-    // $("#nameInputSubmit").click(function () {
-    //   if($("#nameInputBox").val() == "")
-    //     return;
-    //   sessionStorage.setItem('name', $("#nameInputBox").val();
-    //   if(sessionStorage.getItem('name') != null) {
-    //     $("#nameModal").modal('hide');
-    //     console.log(sessionStorage.getItem('name'));
-    //   }
-    // });
+    $( document ).ready(function() {
+      $("#nameModal").modal('show');
+    });
+    $('#nameModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus');
+    });
+    $("#nameInputSubmit").click(function () {
+      if($("#nameInputBox").val() == "")
+        return;
+      sessionStorage.setItem('name', $("#nameInputBox").val());
+      if(sessionStorage.getItem('name') != null) {
+        $("#nameModal").modal('hide');
+        console.log(sessionStorage.getItem('name'));
+      }
+    });
     function scroll() {
         var height = Number.MAX_SAFE_INTEGER;
         $('#dvTextArea').scrollTop(height);
