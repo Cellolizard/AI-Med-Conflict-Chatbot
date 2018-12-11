@@ -249,7 +249,7 @@ def check_for_self_reflection(input):
 
 def check_for_mention_of_drugs(input):
     # populates client_drug_names based on user input, then gets all of the interactions
-    # and concatenates them together into a response
+    # and concatenates them together into a resp
     resp = ""
     stopwords_drugs = stop_words;
     stopwords_drugs.update(DRUGS_STOP_WORDS)
