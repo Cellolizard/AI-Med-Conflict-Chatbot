@@ -170,8 +170,10 @@ ROBO_REFLECTIONS_OPINION_ANSWER = (
 
 SELF_REFLECTIONS_LIKE_RESPONSE = (
     "Hmm, I suppose I do too.",
+    "Hmm, I suppose I like {adjective} {noun} too.",
     "Why?",
-    "Huh. Interesting.",
+    "Why do you like {adjective} {noun}?",
+    "Interesting.",
     )
 
 SELF_REFLECTIONS_FEEL_RESPONSE = (
@@ -181,9 +183,16 @@ SELF_REFLECTIONS_FEEL_RESPONSE = (
     )
 
 SELF_REFLECTIONS_AM_RESPONSE = (
-    "Why are you that?",
-    "Interesting. I sometimes am too.",
+    "Why are you {adjective}?",
+    "Interesting. I sometimes am {adjective} too.",
     "Are you certain?",
+    "Care to explain why you are {adjective}?",
+    )
+
+SELF_REFLECTIONS_AM_A_RESPONSE = (
+    "Why are you a {adjective} {noun}?",
+    "Interesting. I sometimes am a {adjective} {noun} too.",
+    "Are you certain you are a {adjective} {noun}?",
     )
 
 INTERACTION_PREFIXES = ("I found a few things you should know about:",

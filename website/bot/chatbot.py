@@ -34,6 +34,7 @@ from nltk.corpus import wordnet
 # from nltk_data.corpora import stopwords
 # from nltk_data.corpora import wordnet
 # from nltk_data.tokenizers import punkt
+
 # DATA LOADING
 
 p = path.abspath(path.join(__file__, "../.."))
@@ -67,6 +68,8 @@ remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 lemmer = nltk.stem.WordNetLemmatizer()
 
 # API CALLS
+
+# extracted to external files, iteraction.py and rxnorm.py
 
 # CLASSES
 
@@ -188,7 +191,9 @@ def check_for_greeting(input):
     resp = ""
     input_parsed = input.lower().split(" ")
     if("whats up" in input.lower() or "what's up" in input.lower()):
-        resp = "The sky <span class='emoji'>🙄</span>"
+        resp = "The sky. <span class='emoji'>🙄</span>"
+    if "say something" == input.lower() or "say something." == input.lower():
+        resp = "I'm giving up on you. <span class = 'emoji'>🎶</span>"
     elif resp == "":
         for word in GREETING_INPUTS_MULTIWORD:
             if resp != "":
@@ -223,6 +228,10 @@ def check_for_request_for_self_reflection(input, pronoun, noun, adjective, verb)
     resp = ""
     adj = adjective
     n = noun
+    for sent in input.sentences:
+        for word, typ in sent.pos_tags:
+            if typ in ('NNS'):
+                n = word
     if adj == None:
         adj = ""
     if n == None:
@@ -239,40 +248,54 @@ def check_for_request_for_self_reflection(input, pronoun, noun, adjective, verb)
             resp = random.choice(ROBO_REFLECTIONS_PERSONAL_ANSWER)
     return resp
 
-def check_for_self_reflection(input):
+def check_for_self_reflection(input, adjective, noun):
     # checks for if the user has made comments about themselves of the nature 'I feel ____' or 'I am ____'
     resp = ""
+    adj = adjective
+    n = noun
+    for sent in input.sentences:
+        for word, typ in sent.pos_tags:
+            if typ in ('NNS'):
+                n = word
+    if adj == None:
+        adj = ""
+    if n == None:
+        n = "things"
     if "i like" in input.lower():
-        resp = random.choice(SELF_REFLECTIONS_LIKE_RESPONSE)
+        resp = random.choice(SELF_REFLECTIONS_LIKE_RESPONSE).format(**{'adjective': adj, 'noun': n})
     if "i feel" in input.lower():
-        resp = random.choice(SELF_REFLECTIONS_FEEL_RESPONSE)
-    if "i am" in input.lower():
-        resp = random.choice(SELF_REFLECTIONS_AM_RESPONSE)
-
+        resp = random.choice(SELF_REFLECTIONS_FEEL_RESPONSE).format(**{'adjective': adj, 'noun': n})
+    if "i am a" in input.lower():
+        resp = random.choice(SELF_REFLECTIONS_AM_A_RESPONSE).format(**{'adjective': adj, 'noun': n})
+    if "i am" in input.lower() and resp == "":
+        resp = random.choice(SELF_REFLECTIONS_AM_RESPONSE).format(**{'adjective': adj})
+    print(n, adj, resp)
     return resp
 
 def check_for_mention_of_drugs(input):
     # populates client_drug_names based on user input, then gets all of the interactions
     # and concatenates them together into a resp
     resp = ""
+    if "molly" in input.lower() and "percocet" in input.lower():
+        resp += "Mask off. "
     stopwords_drugs = stop_words;
     stopwords_drugs.update(DRUGS_STOP_WORDS)
     client_drug_names.clear()
     for sent in input.sentences:
-        print(sent)
+        # print(sent)
         for word, typ in sent.pos_tags:
-            print("{0}:{1} ".format(word, typ), end="", flush=True)
+            # print("{0}:{1} ".format(word, typ), end="", flush=True)
             if typ in ("RB", "CC", "NN", "NNP", "JJ") and word not in stopwords_drugs:
                 id = rxNormId(word)
                 if id:
                     add_to_client_drug_names(id, { "foo" : word })
-    print(client_drug_names)
+    # print(client_drug_names)
     if(len(client_drug_names) < 2):
         return resp
     drugInteractionsDict = findDrugInteractions(client_drug_names.keys())
     if(len(drugInteractionsDict) < 1):
         return resp
-    resp = random.choice(INTERACTION_PREFIXES) + " "
+    resp += random.choice(INTERACTION_PREFIXES) + " "
     for i in drugInteractionsDict.values():
         resp += "<br>" + i
     return resp
@@ -325,7 +348,7 @@ def respond(sentence):
     if not resp:
         resp = check_for_goodbye(parsed)
     if not resp:
-        resp = check_for_self_reflection(parsed)
+        resp = check_for_self_reflection(parsed, adjective, noun)
     if not resp:
         resp = check_for_request_for_self_reflection(parsed, pronoun, noun, adjective, verb)
     if not resp:
@@ -364,7 +387,8 @@ def respond_normal(sentence):
         resp = resp + "I apologize, but I don't understand what you're saying."
     else:
         resp = resp + sent_tokens[idx]
-        return resp
+    resp = resp.replace('"', '')
+    return resp
 
 #DRIVER
 
