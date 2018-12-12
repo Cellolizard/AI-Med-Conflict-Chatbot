@@ -13,7 +13,6 @@
 
 from __future__ import print_function, unicode_literals
 import nltk
-from nltk.corpus import wordnet
 import numpy as np
 import random
 import string
@@ -30,17 +29,22 @@ from .config import *
 from .interaction import findDrugInteractions
 from .rxnorm import rxNormId
 from nltk.corpus import stopwords
-
+from nltk.corpus import wordnet
+# from nltk.corpus import punkt
+# from nltk_data.corpora import stopwords
+# from nltk_data.corpora import wordnet
+# from nltk_data.tokenizers import punkt
 # DATA LOADING
 
-p = path.abspath(path.join(__file__, "../../.."))
+p = path.abspath(path.join(__file__, "../.."))
 
 os.environ['NLTK_DATA'] = p + '/nltk_data/'
-
+nltk.data.path.append(p + '/nltk_data/')
 # make sure required files are downloaded, but don't print to console
-nltk.download('punkt', quiet=True)
-nltk.download('wordnet', quiet=True)
-nltk.download('stopwords', quiet=True)
+# download_dir='/opt/python/current/app'
+# nltk.download('punkt', quiet=True)
+# nltk.download('wordnet', quiet=True)
+# nltk.download('stopwords', quiet=True)
 
 module_dir = os.path.dirname(__file__)
 file_path = os.path.join(module_dir, 'corpora.txt')

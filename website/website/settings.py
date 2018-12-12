@@ -24,7 +24,13 @@ SECRET_KEY = 'u+n@8-=+#c()oc4)=1ltpaxg$x1fz8-%d!0wff!^6+)xwha#m4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env.ca5jetz8fp.us-east-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = [
+	'localhost',
+	'127.0.0.1',
+	'django-env.ca5jetz8fp.us-east-2.elasticbeanstalk.com',
+	'3.17.113.83',
+	'medbot-neural.net',
+]
 
 
 # Application definition
