@@ -10,7 +10,7 @@ The main directory for the project with a web server/web page UI. To run from th
 Sub-directory /bot contains the files for the bot functionality, in config, corpora, interaction, rxnorm, and chatbot files. This is hooked up for Django implementation, and the surrounding files
 are for the Django requirements. The web files are under /static/bot and /bot/templates. 
 
-A live version is hosted at medbot-neural.net
+A live version is hosted at [medbot-neural.net](medbot-neural.net)
 
 ### Corpora
 
