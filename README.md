@@ -2,6 +2,15 @@
 
 ## Project structure:
 
+
+### Website
+
+
+The main directory for the project with a web server/web page UI. To run from this level, type "python manage.py runserver" from the console, then access at 127.0.0.1:8000/bot in your browser.
+Sub-directory /bot contains the files for the bot functionality, in config, corpora, interaction, rxnorm, and chatbot files. This is hooked up for Django implementation, and the surrounding files
+are for the Django requirements. The web files are under /static/bot and /bot/templates. 
+
+
 ### Corpora
 
 
@@ -23,13 +32,7 @@ Local install of National Language Toolkit 3.3
 ### Project
 
 
-Chatbot experiment files, possible to run chatbot from console with files in this directory. Note: not updated to latest server version.
-
-
-### PyDial
-
-
-Local install of PyDial.
+Chatbot experiment files, possible to run chatbot from console with files in this directory. Test functionality implemented. Note: not updated to latest server version.
 
 
 ### Resources
@@ -37,10 +40,3 @@ Local install of PyDial.
 
 Any interesting or helpful documentation regarding NLP, AI/ML, etc
 
-
-### Website
-
-
-The main directory for the project with a web server/web page UI. To run from this level, type "python manage.py runserver" from the console, then access at 127.0.0.1:8000/bot in your browser.
-Sub-directory /bot contains the files for the bot functionality, in config, corpora, interaction, rxnorm, and chatbot files. This is hooked up for Django implementation, and the surrounding files
-are for the Django requirements. The web files are under /static/bot and /bot/templates. 
